@@ -38,7 +38,7 @@ public class Controlador {
         }
     }
 
-    public static void checkBoxPassword() {
+    public static void checkBoxPassword(){
         if (vl.checBoxPass.isSelected()) {
             vl.txtPass.setEchoChar((char) 0);
         } else {
