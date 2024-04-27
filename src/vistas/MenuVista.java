@@ -125,7 +125,7 @@ public class MenuVista extends javax.swing.JFrame {
 
     private void menuVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuVentasMouseClicked
         controlador.Controlador.ItmVentas();
-        controlador.Controlador.MostrarLog();
+        controlador.Controlador.MostrarUserVenta();
     }//GEN-LAST:event_menuVentasMouseClicked
 
     private void menuCambiarPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuCambiarPassMouseClicked

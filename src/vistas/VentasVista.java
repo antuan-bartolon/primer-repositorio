@@ -208,7 +208,7 @@ public class VentasVista extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel7.setText("PERSONA:");
+        jLabel7.setText("USUARIO:");
 
         txtLabel.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         txtLabel.setForeground(new java.awt.Color(255, 102, 102));
@@ -218,7 +218,7 @@ public class VentasVista extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(51, 51, 51));
         jLabel9.setText("FECHA:");
 
-        labelFecha.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        labelFecha.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         labelFecha.setForeground(new java.awt.Color(255, 102, 102));
         labelFecha.setText("yyyy-mm-dd");
 
@@ -344,7 +344,7 @@ public class VentasVista extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
-        controlador.Controlador.BtnMenu();
+        controlador.Controlador.BtnMenuVenta();
     }//GEN-LAST:event_btnMenuActionPerformed
 
     /**
