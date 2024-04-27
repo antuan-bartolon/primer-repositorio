@@ -16,17 +16,17 @@ public class Controlador {
     // INSTANCIAMOS NUESTRO MODELO
     public static DataBase db = new DataBase();
     public static Usuario usuario = new Usuario();
-   
+
     // METODOS PARA LA VENTANA DEL LOGIN
     public static void MostrarLogin() {
         viewLogin.setVisible(true);
         viewLogin.setLocationRelativeTo(null);
     }
-
+    
     public static void OcultarLogin() {
         viewLogin.setVisible(false);
     }
-
+    
     public static void BtnIngresarLogin() {
         String user = viewLogin.txtUser.getText();
         String password = viewLogin.txtPass.getText();
@@ -45,7 +45,7 @@ public class Controlador {
             }
         }
     }
-
+    
     public static void CheckBoxPassword() {
         // check pass del login
         if (viewLogin.checBoxPass.isSelected()) {
@@ -57,25 +57,25 @@ public class Controlador {
         if (viewPass.check1.isSelected()) {
             viewPass.txtPassActual.setEchoChar((char) 0);
         } else {
-             viewPass.txtPassActual.setEchoChar('*');
+            viewPass.txtPassActual.setEchoChar('*');
         }
-        
+
         //checkpass de la nueva pass 2
         if (viewPass.check2.isSelected()) {
             viewPass.txtPassNuevo.setEchoChar((char) 0);
         } else {
-             viewPass.txtPassNuevo.setEchoChar('*');
+            viewPass.txtPassNuevo.setEchoChar('*');
         }
-        
+
         //check pass de la confirmacion del pass nuevo
         if (viewPass.check3.isSelected()) {
             viewPass.txtPassConfirmar.setEchoChar((char) 0);
         } else {
-             viewPass.txtPassConfirmar.setEchoChar('*');
+            viewPass.txtPassConfirmar.setEchoChar('*');
         }
         
     }
-
+    
     public static void BtnSalirLogin() {
         int confirmar = JOptionPane.showConfirmDialog(null, "Esta usted seguro que desea salir del sistma? ");
         if (confirmar == JOptionPane.YES_OPTION) {
@@ -90,7 +90,7 @@ public class Controlador {
         //mostramos los datos del usuario
         viewMenu.lblUser.setText(db.BuscarLogueo(usuario));
     }
-
+    
     public static void OcultarMenu() {
         viewMenu.setVisible(false);
     }
@@ -99,36 +99,35 @@ public class Controlador {
         OcultarMenu();
         MostrarVentas();
     }
-
+    
     public static void ItmCambiarPass() {
         OcultarMenu();
         MostrarVentanaCambioPass();
     }
-
+    
     public static void ItmCerrarSesion() {
         viewLogin.txtUser.setText("");
         viewLogin.txtPass.setText("");
-
+        
         OcultarMenu();
         MostrarLogin();
     }
-
 
     // METODOS PARA LA VENTANA DE VENTAS
     public static void MostrarVentas() {
         viewVentas.setVisible(true);
         viewVentas.setLocationRelativeTo(null);
     }
-
+    
     public static void OcultarVentas() {
         viewVentas.setVisible(false);
     }
-
+    
     public static void BtnMenuVenta() {
         OcultarVentas();
         MostrarMenu();
     }
-
+    
     public static void MostrarUserVenta() {
         viewVentas.txtLabel.setText(db.BuscarLogueoSinTipPerson(usuario));
         LocalDate hoy = LocalDate.now();
@@ -140,21 +139,43 @@ public class Controlador {
     public static void MostrarVentanaCambioPass() {
         viewPass.setVisible(true);
         viewPass.setLocationRelativeTo(null);
+        LimpiarCamposCambiarPass();
     }
-
+    
     public static void OcultarCambiarPass() {
         viewPass.setVisible(false);
     }
-
+    
     public static void BtnCancelarCambio() {
         viewPass.txtPassActual.setText("");
         viewPass.txtPassNuevo.setText("");
         viewPass.txtPassConfirmar.setText("");
     }
-
+    
     public static void BtnRegresar() {
         OcultarCambiarPass();
         MostrarMenu();
     }
-
+    
+    public static void BtnAceptar() {
+        String passActual = viewPass.txtPassActual.getText();
+        String passNuevo = viewPass.txtPassNuevo.getText();
+        String passConfirmar = viewPass.txtPassConfirmar.getText();
+        if (db.CambiarPassword(usuario, passActual, passNuevo, passConfirmar)) {
+            OcultarCambiarPass();
+            MostrarMenu();
+            JOptionPane.showMessageDialog(null, "EL CAMBIO SE HIZO CON EXITO!!!");
+            usuario.setPassword(passConfirmar);
+        } else {
+            LimpiarCamposCambiarPass();
+            System.out.println("algo ocurrio mal");
+        }
+        
+    }
+    
+    public static void LimpiarCamposCambiarPass() {
+        viewPass.txtPassActual.setText("");
+        viewPass.txtPassNuevo.setText("");
+        viewPass.txtPassConfirmar.setText("");
+    }
 }

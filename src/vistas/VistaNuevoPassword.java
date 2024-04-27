@@ -40,19 +40,30 @@ public class VistaNuevoPassword extends javax.swing.JFrame {
         txtPassConfirmar = new javax.swing.JPasswordField();
         txtPassActual = new javax.swing.JPasswordField();
         txtPassNuevo = new javax.swing.JPasswordField();
+        jLabel1 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
+        jSeparator3 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+
         jLabel4.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
-        jLabel4.setText("CONTRASEÑA ACTUAL:");
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Password anterior");
 
         jLabel5.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
-        jLabel5.setText("CONFIRMAR CONTRASEÑA:");
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Confirmar password");
 
         jLabel6.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
-        jLabel6.setText("CONTRASEÑA NUEVA:");
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Password nuevo");
 
-        btnAceptar.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        btnAceptar.setBackground(new java.awt.Color(102, 153, 255));
+        btnAceptar.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
         btnAceptar.setText("ACEPTAR");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -60,22 +71,29 @@ public class VistaNuevoPassword extends javax.swing.JFrame {
             }
         });
 
-        btnCancelar.setFont(new java.awt.Font("Consolas", 1, 18)); // NOI18N
+        btnCancelar.setBackground(new java.awt.Color(51, 51, 51));
+        btnCancelar.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(255, 102, 102));
         btnCancelar.setText("CANCELAR");
+        btnCancelar.setBorder(null);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
 
-        btnSalirDePass.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
+        btnSalirDePass.setBackground(new java.awt.Color(51, 51, 51));
+        btnSalirDePass.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        btnSalirDePass.setForeground(new java.awt.Color(255, 255, 255));
         btnSalirDePass.setText("REGRESAR");
+        btnSalirDePass.setBorder(null);
         btnSalirDePass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalirDePassActionPerformed(evt);
             }
         });
 
+        check1.setBackground(new java.awt.Color(102, 153, 255));
         check1.setBorder(null);
         check1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -83,6 +101,7 @@ public class VistaNuevoPassword extends javax.swing.JFrame {
             }
         });
 
+        check2.setBackground(new java.awt.Color(102, 153, 255));
         check2.setBorder(null);
         check2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,6 +109,7 @@ public class VistaNuevoPassword extends javax.swing.JFrame {
             }
         });
 
+        check3.setBackground(new java.awt.Color(102, 153, 255));
         check3.setBorder(null);
         check3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,76 +117,113 @@ public class VistaNuevoPassword extends javax.swing.JFrame {
             }
         });
 
+        txtPassConfirmar.setBackground(new java.awt.Color(51, 51, 51));
         txtPassConfirmar.setFont(new java.awt.Font("Lucida Sans", 0, 24)); // NOI18N
+        txtPassConfirmar.setForeground(new java.awt.Color(255, 255, 255));
         txtPassConfirmar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtPassConfirmar.setBorder(null);
 
+        txtPassActual.setBackground(new java.awt.Color(51, 51, 51));
         txtPassActual.setFont(new java.awt.Font("Lucida Sans", 0, 24)); // NOI18N
+        txtPassActual.setForeground(new java.awt.Color(255, 255, 255));
         txtPassActual.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtPassActual.setBorder(null);
 
+        txtPassNuevo.setBackground(new java.awt.Color(51, 51, 51));
         txtPassNuevo.setFont(new java.awt.Font("Lucida Sans", 0, 24)); // NOI18N
+        txtPassNuevo.setForeground(new java.awt.Color(255, 255, 255));
         txtPassNuevo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtPassNuevo.setBorder(null);
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Cambio de password");
+
+        jSeparator1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jSeparator2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jSeparator3.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(69, 69, 69)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtPassConfirmar)
-                    .addComponent(txtPassActual, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-                    .addComponent(txtPassNuevo))
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(check2)
-                    .addComponent(check3)
-                    .addComponent(check1))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 74, Short.MAX_VALUE)
+                .addContainerGap(43, Short.MAX_VALUE)
+                .addComponent(btnCancelar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSalirDePass, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
+                .addGap(18, 18, 18)
                 .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65))
+                .addGap(24, 24, 24))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel5)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtPassNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(check2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtPassConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(check3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtPassActual, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE))
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(check1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(48, 48, 48)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtPassActual, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(check1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(check1)
-                        .addGap(43, 43, 43)
+                        .addComponent(txtPassNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(check2)
-                        .addGap(28, 28, 28))
+                        .addGap(18, 18, 18)))
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtPassActual, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtPassNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addGap(19, 19, 19)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtPassConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtPassConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
+                        .addGap(90, 90, 90)
                         .addComponent(check3)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSalirDePass, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalirDePass, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -177,7 +234,10 @@ public class VistaNuevoPassword extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
 
         pack();
@@ -188,7 +248,7 @@ public class VistaNuevoPassword extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        
+        controlador.Controlador.BtnAceptar();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnSalirDePassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirDePassActionPerformed
@@ -219,10 +279,14 @@ public class VistaNuevoPassword extends javax.swing.JFrame {
     public javax.swing.JCheckBox check1;
     public javax.swing.JCheckBox check2;
     public javax.swing.JCheckBox check3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     public javax.swing.JPasswordField txtPassActual;
     public javax.swing.JPasswordField txtPassConfirmar;
     public javax.swing.JPasswordField txtPassNuevo;
