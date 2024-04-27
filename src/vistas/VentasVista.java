@@ -42,7 +42,7 @@ public class VentasVista extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         txtLabel = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        labelFecha = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
@@ -214,9 +214,13 @@ public class VentasVista extends javax.swing.JFrame {
         txtLabel.setForeground(new java.awt.Color(255, 102, 102));
         txtLabel.setText("Nombre del Empleado ya logeado");
 
+        jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(51, 51, 51));
         jLabel9.setText("FECHA:");
 
-        jLabel10.setText("12/12/2024");
+        labelFecha.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        labelFecha.setForeground(new java.awt.Color(255, 102, 102));
+        labelFecha.setText("yyyy-mm-dd");
 
         jButton6.setText("COBRAR");
 
@@ -230,7 +234,7 @@ public class VentasVista extends javax.swing.JFrame {
 
         jButton8.setText("ELIMINAR REGISTRO");
 
-        btnMenu.setText("MENU");
+        btnMenu.setText("SALIR");
         btnMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMenuActionPerformed(evt);
@@ -253,8 +257,8 @@ public class VentasVista extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel10)
-                        .addGap(8, 8, 8))
+                        .addComponent(labelFecha)
+                        .addGap(27, 27, 27))
                     .addComponent(PRODUCTO, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,8 +298,8 @@ public class VentasVista extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel9)
-                    .addComponent(jLabel10)
-                    .addComponent(txtLabel))
+                    .addComponent(txtLabel)
+                    .addComponent(labelFecha))
                 .addGap(18, 18, 18)
                 .addComponent(CLIENTE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -340,7 +344,7 @@ public class VentasVista extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
-        controlador.Controlador.btnMenu();
+        controlador.Controlador.BtnMenu();
     }//GEN-LAST:event_btnMenuActionPerformed
 
     /**
@@ -364,7 +368,6 @@ public class VentasVista extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -386,6 +389,7 @@ public class VentasVista extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    public javax.swing.JLabel labelFecha;
     public javax.swing.JLabel txtLabel;
     // End of variables declaration//GEN-END:variables
 }

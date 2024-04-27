@@ -1,103 +1,155 @@
 package controlador;
 
+import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import modelo.DataBase;
 import vistas.*;
 
 public class Controlador {
 
-    public static VentasVista vv = new VentasVista();
-    public static LoginVista lv = new LoginVista();
-    public static MenuVista mv = new MenuVista();
-    public static VistaLogin vl = new VistaLogin();
-
-    public static void mostrarLogin() {
-        vl.setVisible(true);
-        vl.setLocationRelativeTo(null);
-
+    public static VentasVista viewVentas = new VentasVista();
+    public static MenuVista viewMenu = new MenuVista();
+    public static VistaLogin viewLogin = new VistaLogin();
+    public static VistaNuevoPassword viewPass = new VistaNuevoPassword();
+   
+    // METODOS PARA LA VENTANA DEL LOGIN
+    public static void MostrarLogin() {
+        viewLogin.setVisible(true);
+        viewLogin.setLocationRelativeTo(null);
     }
 
-    public static void ocultarLogin() {
-        vl.setVisible(false);
+    public static void OcultarLogin() {
+        viewLogin.setVisible(false);
     }
 
-    public static void btnIngresar() {
-        String user = vl.txtUser.getText();
-        String password = vl.txtPass.getText();
+    public static void BtnIngresar() {
+        String user = viewLogin.txtUser.getText();
+        String password = viewLogin.txtPass.getText();
         if (user.isEmpty() || password.isEmpty()) {
             JOptionPane.showMessageDialog(null, "DIGITE UN USUARIO Y UNA CONTRASENIA");
         } else {
             DataBase bd = new DataBase();
             if (bd.validarUsuario(user, password)) {
-                ocultarLogin();
-                mostrarMenu();
+                OcultarLogin();
+                MostrarMenu();
             } else {
-                vl.txtUser.setText("");
-                vl.txtPass.setText("");
+                viewLogin.txtUser.setText("");
+                viewLogin.txtPass.setText("");
             }
         }
     }
 
-    public static void checkBoxPassword(){
-        if (vl.checBoxPass.isSelected()) {
-            vl.txtPass.setEchoChar((char) 0);
+    public static void CheckBoxPassword() {
+        // check pass del login
+        if (viewLogin.checBoxPass.isSelected()) {
+            viewLogin.txtPass.setEchoChar((char) 0);
         } else {
-            vl.txtPass.setEchoChar('*');
+            viewLogin.txtPass.setEchoChar('*');
         }
+        // ceckpass de la pass actual
+        if (viewPass.check1.isSelected()) {
+            viewPass.txtPassActual.setEchoChar((char) 0);
+        } else {
+             viewPass.txtPassActual.setEchoChar('*');
+        }
+        
+        //checkpass de la nueva pass 2
+        if (viewPass.check2.isSelected()) {
+            viewPass.txtPassNuevo.setEchoChar((char) 0);
+        } else {
+             viewPass.txtPassNuevo.setEchoChar('*');
+        }
+        
+        //check pass de la confirmacion del pass nuevo
+        if (viewPass.check3.isSelected()) {
+            viewPass.txtPassConfirmar.setEchoChar((char) 0);
+        } else {
+             viewPass.txtPassConfirmar.setEchoChar('*');
+        }
+        
     }
 
-    public static void btnSalir() {
+    public static void BtnSalir() {
         int confirmar = JOptionPane.showConfirmDialog(null, "ESTA SEGURO QUE DESEA SALIR DEL SISTEMA? ");
         if (confirmar == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
     }
 
-    public static void mostrarMenu() {
+    // METODOS PARA LA VENTANA DE MENU
+    public static void MostrarMenu() {
         DataBase db = new DataBase();
-        mv.setVisible(true);
-        mv.setLocationRelativeTo(null);
-        mv.lblUser.setText(db.buscarLog(vl.txtUser.getText()));
+        viewMenu.setVisible(true);
+        viewMenu.setLocationRelativeTo(null);
+        viewMenu.lblUser.setText(db.buscarLog(viewLogin.txtUser.getText()));
     }
 
-    public static void ocultarMenu() {
-        mv.setVisible(false);
-        mv.setLocationRelativeTo(null);
+    public static void OcultarMenu() {
+        viewMenu.setVisible(false);
     }
 
-    public static void itmCerrarSesion() {
-        vl.txtUser.setText("");
-        vl.txtPass.setText("");
-        ocultarMenu();
-        mostrarLogin();
+    public static void ItmCambiarPass() {
+        OcultarMenu();
+        MostrarCambiarPass();
     }
 
-    public static void itmVentas() {
-        ocultarMenu();
-        mostrarVentas();
+    public static void ItmCerrarSesion() {
+        viewLogin.txtUser.setText("");
+        viewLogin.txtPass.setText("");
+
+        OcultarMenu();
+        MostrarLogin();
     }
 
-    public static void mostrarVentas() {
-        vv.setVisible(true);
-        vv.setLocationRelativeTo(null);
+    public static void ItmVentas() {
+        OcultarMenu();
+        MostrarVentas();
     }
 
-    public static void ocultarVentas() {
-        vv.setVisible(false);
-        vv.setLocationRelativeTo(null);
-
+    // METODOS PARA LA VENTANA DE VENTAS
+    public static void MostrarVentas() {
+        viewVentas.setVisible(true);
+        viewVentas.setLocationRelativeTo(null);
     }
 
-    public static void btnMenu() {
-        ocultarVentas();
-        mostrarMenu();
+    public static void OcultarVentas() {
+        viewVentas.setVisible(false);
     }
 
-    public static void mostrarLog() {
+    public static void BtnMenu() {
+        OcultarVentas();
+        MostrarMenu();
+    }
+
+    public static void MostrarLog() {
         DataBase db = new DataBase();
-        String user = vl.txtUser.getText();
-        vv.txtLabel.setText(db.buscarLogSinTipPerson(user));
+        String user = viewLogin.txtUser.getText();
+        viewVentas.txtLabel.setText(db.buscarLogSinTipPerson(user));
+        LocalDate hoy = LocalDate.now();
+        String fecha = String.valueOf(hoy);
+        viewVentas.labelFecha.setText(fecha);
+        
+    }
 
+    // METODOS PARA LA VENTANA DE CAMBIAR PASSWORD
+    public static void MostrarCambiarPass() {
+        viewPass.setVisible(true);
+        viewPass.setLocationRelativeTo(null);
+    }
+
+    public static void OcultarCambiarPass() {
+        viewPass.setVisible(false);
+    }
+
+    public static void BtnCancelar() {
+        viewPass.txtPassActual.setText("");
+        viewPass.txtPassNuevo.setText("");
+        viewPass.txtPassConfirmar.setText("");
+    }
+
+    public static void BtnRegresar() {
+        OcultarCambiarPass();
+        MostrarMenu();
     }
 
 }
