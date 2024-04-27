@@ -13,12 +13,11 @@ import javax.swing.JOptionPane;
 
 public class DataBase {
 
-    //
+    // INICIALIZAMOS VARIABLES
     Connection conexion;
     PreparedStatement ps;
     ResultSet rs;
-    // 
-
+    
     public DataBase() {
         try {
             conexion = DriverManager.getConnection("jdbc:mysql://localhost/mybdcomp4b10?serverTimezone=UTC", "root", "");
@@ -26,41 +25,37 @@ public class DataBase {
         } catch (SQLException ex) {
             System.out.println("ERROR: " + ex.getSQLState() + " - " + ex.getMessage());
         }
-    }
+    } // CONEXION A MY SQL
 
-    //
-    public boolean validarUsuario(String user, String pass) {
-
-        Date fechaIni = null;
-        Date fechaFin = null;
+    // METODOS
+    public boolean ValidarUsuario(Usuario user) {
         String validar = "SELECT * FROM musuario WHERE logUser = ? and passUser = ?";
         try {
             ps = conexion.prepareStatement(validar);
-            ps.setString(1, user);
-            ps.setString(2, pass);
+            ps.setString(1, user.getLogUser());
+            ps.setString(2, user.getPassword());
             rs = ps.executeQuery();
-            //Date today = new Date(System.currentTimeMillis());
             if (rs.next()) {
-                fechaIni = rs.getDate("fecIni");
-                fechaFin = rs.getDate("fecFin");
+                Date fechaIni = rs.getDate("fecIni");
+                Date fechaFin = rs.getDate("fecFin");
                 LocalDate hoy = LocalDate.now();
                 LocalDate fecIni = fechaIni.toLocalDate();
                 LocalDate fecFin = fechaFin.toLocalDate();
                 if (rs.getInt("edoCta") == 0) {
-                    JOptionPane.showMessageDialog(null, "CUENTA CADUCADA\nCONTACTE AL ADMINISTRADOR");
+                    JOptionPane.showMessageDialog(null, "CUENTA CADUCADA\nContacte al adiministrador");
                     return false;
                 } else if (hoy.isBefore(fecIni) || hoy.equals(fecIni)) {
-                    JOptionPane.showMessageDialog(null, "CUENTA POR ACTIVAR\nCONTACTE AL ADMINISTRADOR");
+                    JOptionPane.showMessageDialog(null, "CUENTA POR ACTIVAR\nContacte al adiministrador");
                     return false;
                 } else if (hoy.equals(fecFin)) {
-                    JOptionPane.showMessageDialog(null, "TU CUENTA VENCE HOY\nCONTACTE AL ADMINISTRADOR");
+                    JOptionPane.showMessageDialog(null, "TU CUENTA VENCE HOY\nContacte al adiministrador");
                     return true;
                 } else if (hoy.isAfter(fecFin)) {
                     String sqlUpdate = "UPDATE musuario SET edoCta = 0 WHERE logUser = ?";
                     PreparedStatement psUpdate = conexion.prepareStatement(sqlUpdate);
-                    psUpdate.setString(1, user);
+                    psUpdate.setString(1, user.getLogUser());
                     psUpdate.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "CUENTA VENCIDA\nCONTACTE AL ADMINISTRADOR");
+                    JOptionPane.showMessageDialog(null, "CUENTA VENCIDA\nContacte al adiministrador");
                     return false;
                 }
                 return true;
@@ -72,7 +67,7 @@ public class DataBase {
         return false;
     }
 
-    public String buscarLog(String user) {
+    public String BuscarLogueo(Usuario user) {
         String buscar = "SELECT concat(DsNombre,' ',Pater.DsApellido ,' ', Mater.DsApellido,' ','(',DsTpPerson,')') As Nombre \n"
                 + "FROM musuario,mdtperson, cNombre, \n"
                 + "capellido Pater, capellido Mater, ctpperson \n"
@@ -85,7 +80,7 @@ public class DataBase {
         String nombre = " ";
         try {
             ps = conexion.prepareStatement(buscar);
-            ps.setString(1, user);
+            ps.setString(1, user.getLogUser());
             rs = ps.executeQuery();
             if (rs.next()) {
                 nombre = rs.getString("Nombre");
@@ -97,7 +92,7 @@ public class DataBase {
         return nombre;
     }
 
-    public String buscarLogSinTipPerson(String user) {
+    public String BuscarLogueoSinTipPerson(Usuario user) {
         String buscar = "SELECT concat(DsNombre,' ',Pater.DsApellido ,' ', Mater.DsApellido) As Nombre \n"
                 + "FROM musuario,mdtperson, cNombre, \n"
                 + "capellido Pater, capellido Mater, ctpperson \n"
@@ -109,7 +104,7 @@ public class DataBase {
         String nombre = " ";
         try {
             ps = conexion.prepareStatement(buscar);
-            ps.setString(1, user);
+            ps.setString(1, user.getLogUser());
             rs = ps.executeQuery();
             if (rs.next()) {
                 nombre = rs.getString("Nombre");
