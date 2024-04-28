@@ -1,9 +1,9 @@
 
 package vistas;
 
-public class VentasVista extends javax.swing.JFrame {
+public class VistaVentas extends javax.swing.JFrame {
 
-    public VentasVista() {
+    public VistaVentas() {
         initComponents();
     }
 

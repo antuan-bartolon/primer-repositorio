@@ -2,12 +2,12 @@
 package vistas;
 
 
-public class MenuVista extends javax.swing.JFrame {
+public class VistaMenu extends javax.swing.JFrame {
 
     /**
      * Creates new form MenuVIsta
      */
-    public MenuVista() {
+    public VistaMenu() {
         initComponents();
     }
 
@@ -38,7 +38,7 @@ public class MenuVista extends javax.swing.JFrame {
         jLabel2.setText("BIENVENIDO USUARIO:");
 
         lblUser.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        lblUser.setForeground(new java.awt.Color(255, 102, 102));
+        lblUser.setForeground(new java.awt.Color(102, 153, 255));
         lblUser.setText("usuario nadamas");
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
@@ -72,6 +72,7 @@ public class MenuVista extends javax.swing.JFrame {
         jMenuBar2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         menuVentas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menuVentas.setForeground(new java.awt.Color(102, 102, 255));
         menuVentas.setText("Ventas");
         menuVentas.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
         menuVentas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -82,6 +83,7 @@ public class MenuVista extends javax.swing.JFrame {
         jMenuBar2.add(menuVentas);
 
         menuCambiarPass.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menuCambiarPass.setForeground(new java.awt.Color(102, 102, 255));
         menuCambiarPass.setText("Cambiar contrasenia");
         menuCambiarPass.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
         menuCambiarPass.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -92,6 +94,7 @@ public class MenuVista extends javax.swing.JFrame {
         jMenuBar2.add(menuCambiarPass);
 
         menuCerrarSesion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        menuCerrarSesion.setForeground(new java.awt.Color(102, 102, 255));
         menuCerrarSesion.setText("Cerrar sesion");
         menuCerrarSesion.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
         menuCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
