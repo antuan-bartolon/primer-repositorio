@@ -2,8 +2,7 @@ package controlador;
 
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
-import modelo.DataBase;
-import modelo.Usuario;
+import modelo.*;
 import vistas.*;
 
 public class Controlador {
@@ -16,6 +15,7 @@ public class Controlador {
     // INSTANCIAMOS NUESTRO MODELO
     public static DataBase db = new DataBase();
     public static Usuario usuario = new Usuario();
+    public static PasswordsCampos passwords = new PasswordsCampos();
 
     // METODOS PARA LA VENTANA DEL LOGIN
     public static void MostrarLogin() {
@@ -35,15 +35,14 @@ public class Controlador {
 
         if (user.isEmpty() || password.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Por favor digite un usuario y una Contraseña");
+        } else if (db.ValidarUsuario(usuario)) {
+            OcultarLogin();
+            MostrarMenu();
         } else {
-            if (db.ValidarUsuario(usuario)) {
-                OcultarLogin();
-                MostrarMenu();
-            } else {
-                viewLogin.txtUser.setText("");
-                viewLogin.txtPass.setText("");
-            }
+            viewLogin.txtUser.setText("");
+            viewLogin.txtPass.setText("");
         }
+
     }
 
     public static void CheckBoxPassword() {
@@ -53,31 +52,28 @@ public class Controlador {
         } else {
             viewLogin.txtPass.setEchoChar('*');
         }
-        // ceckpass de la pass actual
+        // ceckpass de la pass anterior
         if (viewPass.check1.isSelected()) {
             viewPass.txtPassActual.setEchoChar((char) 0);
         } else {
             viewPass.txtPassActual.setEchoChar('*');
         }
-
-        //checkpass de la nueva pass 2
+        //checkpass de la nueva pass 
         if (viewPass.check2.isSelected()) {
             viewPass.txtPassNuevo.setEchoChar((char) 0);
         } else {
             viewPass.txtPassNuevo.setEchoChar('*');
         }
-
         //check pass de la confirmacion del pass nuevo
         if (viewPass.check3.isSelected()) {
             viewPass.txtPassConfirmar.setEchoChar((char) 0);
         } else {
             viewPass.txtPassConfirmar.setEchoChar('*');
         }
-
     }
 
     public static void BtnSalirLogin() {
-        int confirmar = JOptionPane.showConfirmDialog(null, "Esta usted seguro que desea salir del sistma? ");
+        int confirmar = JOptionPane.showConfirmDialog(null, "Esta usted seguro que desea salir? ");
         if (confirmar == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
@@ -108,7 +104,6 @@ public class Controlador {
     public static void ItmCerrarSesion() {
         viewLogin.txtUser.setText("");
         viewLogin.txtPass.setText("");
-
         OcultarMenu();
         MostrarLogin();
     }
@@ -159,23 +154,26 @@ public class Controlador {
     }
 
     public static void BtnAceptar() {
-        String passActual = viewPass.txtPassActual.getText();
+        String passAnterior = viewPass.txtPassActual.getText();
         String passNuevo = viewPass.txtPassNuevo.getText();
         String passConfirmar = viewPass.txtPassConfirmar.getText();
 
-        if (passActual.isEmpty() || passNuevo.isEmpty() || passConfirmar.isEmpty()) {
+        passwords.setPassAnterior(passAnterior);
+        passwords.setPassNuevo(passNuevo);
+        passwords.setConfirmarPass(passConfirmar);
+
+        if (passAnterior.isEmpty() || passNuevo.isEmpty() || passConfirmar.isEmpty()) {
             viewPass.txtError.setText("por favor rellene todos los campos");
-        } else if (db.CambiarPassword(usuario, passActual, passNuevo, passConfirmar)) {
+        } else if (db.CambiarPassword(usuario, passwords)) {
             OcultarCambiarPass();
             MostrarMenu();
+            // seteamos la nueva passqord a usuario, para que pueda cambiar otra vez estando en el sistema
             usuario.setPassword(passConfirmar);
             JOptionPane.showMessageDialog(null, "EL CAMBIO SE HIZO CON EXITO!!!");
         } else {
             LimpiarCamposCambiarPass();
-            System.out.println("algo ocurrio mal");
-
+            System.out.println("operacion sin ejecutar");
         }
-
     }
 
     public static void LimpiarCamposCambiarPass() {

@@ -7,18 +7,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class DataBase {
 
     // INICIALIZAMOS VARIABLES
-    Connection conexion;
-    PreparedStatement ps;
-    ResultSet rs;
+    Connection conexion = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
 
-    public DataBase() {
+    public DataBase() { 
         try {
             conexion = DriverManager.getConnection("jdbc:mysql://localhost/mybdcomp4b10?serverTimezone=UTC", "root", "");
             System.out.println("conexion exitosa");
@@ -86,7 +84,7 @@ public class DataBase {
                 nombre = rs.getString("Nombre");
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("ERROR EN: BuscarLogueo: " + ex.getMessage());
         }
 
         return nombre;
@@ -116,7 +114,7 @@ public class DataBase {
         return nombre;
     }
 
-    public boolean CambiarPassword(Usuario user, String passActual, String passNuevo, String passConfirmar) {
+    public boolean CambiarPassword(Usuario user, PasswordsCampos passwords) {
         String sentenciaRecorrerPass = "SELECT PassUser FROM musuario";
         String cambiarPass = "UPDATE musuario SET passUser = ? WHERE logUser = ? and PassUser = ? ";
         String passObtenido = null;
@@ -125,30 +123,34 @@ public class DataBase {
             rs = ps.executeQuery();
             while (rs.next()) {
                 passObtenido = rs.getString("PassUser");
+                // muestra por consola las paswords existentes en la BD
+                // para verificar si se esta haciendo bien el recorrido
                 System.out.printf(" %s \n", passObtenido);
-                if (passObtenido.equals(passConfirmar)) {
-                    JOptionPane.showMessageDialog(null, "EL PASSWORD AL QUE INTENTAS CAMBIAR YA EXISTE");
+                if (passObtenido.equals(passwords.getConfirmarPass())) {
+                    JOptionPane.showMessageDialog(null, "EL PASSWORD AL QUE INTENTAS CAMBIAR YA EXISTE, INTENTA CON OTRO");
                     return false;
-                } else if (!user.getPassword().equals(passActual)) {
-                    JOptionPane.showMessageDialog(null, "PASSWORD ACTUAL INCORRECTO");
+                } else if (!user.getPassword().equals(passwords.getPassAnterior())) {
+                    JOptionPane.showMessageDialog(null, "PASSWORD ANTERIOR INCORRECTO");
                     return false;
-                } else if (!passConfirmar.equals(passNuevo)) {
-                    JOptionPane.showMessageDialog(null, "ERROR\nVERIFIQUE QUE EN LOS CAMPOS HALLAS ESCRITO LA MISMA PASSWORD");
+                } else if (!passwords.getConfirmarPass().equals(passwords.getPassNuevo())) {
+                    JOptionPane.showMessageDialog(null, "VERIFIQUE LOS CAMPOS");
                     return false;
                 }
-            }
+            } // fin del while
+            
         } catch (Exception e) {
-            System.out.println("ERROR EN: CambiarPassword: " + e.getMessage());
+            System.out.println("ERROR EN: CambiarPasswordTry1: " + e.getMessage());
         }
         try {
             ps = conexion.prepareStatement(cambiarPass);
-            ps.setString(1, passConfirmar);
+            ps.setString(1, passwords.getConfirmarPass());
             ps.setString(2, user.getLogUser());
-            ps.setString(3, passActual);
+            ps.setString(3, passwords.getPassAnterior());
             ps.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("ERROR EN: CambiarPasswordTry2: " + ex.getMessage());
         }
+        // se hace el vambio si esque todo es valido
         return true;
     }
 
