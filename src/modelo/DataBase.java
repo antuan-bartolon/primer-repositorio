@@ -114,10 +114,11 @@ public class DataBase {
         return nombre;
     }
 
-    public boolean CambiarPassword(Usuario user, PasswordsCampos passwords) {
+    public boolean CambiarPassword(Usuario user, String passAnterior, String passNuevo, String passConfirmar) {
+
         String sentenciaRecorrerPass = "SELECT PassUser FROM musuario";
         String cambiarPass = "UPDATE musuario SET passUser = ? WHERE logUser = ? and PassUser = ? ";
-        String passObtenido = null;
+        String passObtenido;
         try {
             ps = conexion.prepareStatement(sentenciaRecorrerPass);
             rs = ps.executeQuery();
@@ -126,13 +127,13 @@ public class DataBase {
                 // muestra por consola las paswords existentes en la BD
                 // para verificar si se esta haciendo bien el recorrido
                 System.out.printf(" %s \n", passObtenido);
-                if (passObtenido.equals(passwords.getConfirmarPass())) {
+                if (passObtenido.equals(passConfirmar)) {
                     JOptionPane.showMessageDialog(null, "EL PASSWORD AL QUE INTENTAS CAMBIAR YA EXISTE, INTENTA CON OTRO");
                     return false;
-                } else if (!user.getPassword().equals(passwords.getPassAnterior())) {
+                } else if (!user.getPassword().equals(passAnterior)) {
                     JOptionPane.showMessageDialog(null, "PASSWORD ANTERIOR INCORRECTO");
                     return false;
-                } else if (!passwords.getConfirmarPass().equals(passwords.getPassNuevo())) {
+                } else if (!passConfirmar.equals(passNuevo)) {
                     JOptionPane.showMessageDialog(null, "VERIFIQUE LOS CAMPOS");
                     return false;
                 }
@@ -143,9 +144,9 @@ public class DataBase {
         }
         try {
             ps = conexion.prepareStatement(cambiarPass);
-            ps.setString(1, passwords.getConfirmarPass());
+            ps.setString(1, passConfirmar);
             ps.setString(2, user.getLogUser());
-            ps.setString(3, passwords.getPassAnterior());
+            ps.setString(3, passAnterior);
             ps.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("ERROR EN: CambiarPasswordTry2: " + ex.getMessage());

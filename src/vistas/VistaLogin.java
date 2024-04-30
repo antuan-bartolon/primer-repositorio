@@ -4,7 +4,7 @@ public class VistaLogin extends javax.swing.JFrame {
 
     public VistaLogin() {
         initComponents();
-        //this.setLocationRelativeTo(this);
+        ocultarPass.setVisible(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -25,18 +25,23 @@ public class VistaLogin extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         btnIngresar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
-        checBoxPass = new javax.swing.JCheckBox();
+        verPass = new javax.swing.JLabel();
+        ocultarPass = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/userInicio.png"))); // NOI18N
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 61, -1, -1));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("ACCESO");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(143, 11, -1, -1));
 
         txtUser.setBackground(new java.awt.Color(51, 51, 51));
         txtUser.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
@@ -49,18 +54,23 @@ public class VistaLogin extends javax.swing.JFrame {
                 txtUserActionPerformed(evt);
             }
         });
+        jPanel1.add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, 195, 30));
 
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(71, 277, 235, 35));
 
         jLabel3.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Usuario:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, -1, -1));
 
         jSeparator2.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 370, 235, 41));
 
         lblPass.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
         lblPass.setForeground(new java.awt.Color(255, 255, 255));
         lblPass.setText("Contraseña:");
+        jPanel1.add(lblPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 300, -1, -1));
 
         txtPass.setBackground(new java.awt.Color(51, 51, 51));
         txtPass.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
@@ -70,12 +80,16 @@ public class VistaLogin extends javax.swing.JFrame {
         txtPass.setCaretColor(new java.awt.Color(255, 255, 255));
         txtPass.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtPass.setEchoChar('*');
+        jPanel1.add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, 190, 30));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/userLabel.png"))); // NOI18N
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, -1));
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 369, -1, -1));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/key.png"))); // NOI18N
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, -1, -1));
 
         btnIngresar.setBackground(new java.awt.Color(102, 153, 255));
         btnIngresar.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
@@ -87,6 +101,7 @@ public class VistaLogin extends javax.swing.JFrame {
                 btnIngresarActionPerformed(evt);
             }
         });
+        jPanel1.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 416, -1, 42));
 
         btnSalir.setBackground(new java.awt.Color(51, 51, 51));
         btnSalir.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
@@ -98,120 +113,28 @@ public class VistaLogin extends javax.swing.JFrame {
                 btnSalirActionPerformed(evt);
             }
         });
+        jPanel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 470, 55, 42));
 
-        checBoxPass.setBackground(new java.awt.Color(255, 102, 102));
-        checBoxPass.setBorder(null);
-        checBoxPass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checBoxPassActionPerformed(evt);
+        verPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/vista.png"))); // NOI18N
+        verPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                verPassMouseClicked(evt);
             }
         });
+        jPanel1.add(verPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 330, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(65, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblPass)
-                        .addGap(143, 143, 143))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                            .addGap(6, 6, 6)
-                                            .addComponent(jLabel5)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(44, 44, 44)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(40, 40, 40)))
-                                .addComponent(checBoxPass)))
-                        .addGap(44, 44, 44))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnIngresar)
-                        .addGap(115, 115, 115))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(131, 131, 131)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(143, 143, 143)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(157, 157, 157)
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(165, 165, 165)
-                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(26, 26, 26)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(1, 1, 1)
-                        .addComponent(lblPass)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(checBoxPass)
-                        .addGap(7, 7, 7)))
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
-        );
+        ocultarPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/esconder.png"))); // NOI18N
+        ocultarPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ocultarPassMouseClicked(evt);
+            }
+        });
+        jPanel1.add(ocultarPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 330, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 534));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void checBoxPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checBoxPassActionPerformed
-        controlador.Controlador.CheckBoxPassword();
-    }//GEN-LAST:event_checBoxPassActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         controlador.Controlador.BtnSalirLogin();
@@ -225,6 +148,18 @@ public class VistaLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUserActionPerformed
 
+    private void verPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verPassMouseClicked
+        verPass.setVisible(false);
+        ocultarPass.setVisible(true);
+        txtPass.setEchoChar((char) 0);
+    }//GEN-LAST:event_verPassMouseClicked
+
+    private void ocultarPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ocultarPassMouseClicked
+        verPass.setVisible(true);
+        ocultarPass.setVisible(false);
+        txtPass.setEchoChar('*');
+    }//GEN-LAST:event_ocultarPassMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -232,7 +167,6 @@ public class VistaLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnIngresar;
     public javax.swing.JButton btnSalir;
-    public javax.swing.JCheckBox checBoxPass;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -243,7 +177,9 @@ public class VistaLogin extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblPass;
+    public javax.swing.JLabel ocultarPass;
     public javax.swing.JPasswordField txtPass;
     public javax.swing.JTextField txtUser;
+    public javax.swing.JLabel verPass;
     // End of variables declaration//GEN-END:variables
 }

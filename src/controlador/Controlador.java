@@ -15,7 +15,6 @@ public class Controlador {
     // INSTANCIAMOS NUESTRO MODELO
     public static DataBase db = new DataBase();
     public static Usuario usuario = new Usuario();
-    public static PasswordsCampos passwords = new PasswordsCampos();
 
     // METODOS PARA LA VENTANA DEL LOGIN
     public static void MostrarLogin() {
@@ -26,7 +25,7 @@ public class Controlador {
     public static void OcultarLogin() {
         viewLogin.setVisible(false);
     }
-
+    
     public static void BtnIngresarLogin() {
         String user = viewLogin.txtUser.getText();
         String password = viewLogin.txtPass.getText();
@@ -43,33 +42,6 @@ public class Controlador {
             viewLogin.txtPass.setText("");
         }
 
-    }
-
-    public static void CheckBoxPassword() {
-        // check pass del login
-        if (viewLogin.checBoxPass.isSelected()) {
-            viewLogin.txtPass.setEchoChar((char) 0);
-        } else {
-            viewLogin.txtPass.setEchoChar('*');
-        }
-        // ceckpass de la pass anterior
-        if (viewPass.check1.isSelected()) {
-            viewPass.txtPassActual.setEchoChar((char) 0);
-        } else {
-            viewPass.txtPassActual.setEchoChar('*');
-        }
-        //checkpass de la nueva pass 
-        if (viewPass.check2.isSelected()) {
-            viewPass.txtPassNuevo.setEchoChar((char) 0);
-        } else {
-            viewPass.txtPassNuevo.setEchoChar('*');
-        }
-        //check pass de la confirmacion del pass nuevo
-        if (viewPass.check3.isSelected()) {
-            viewPass.txtPassConfirmar.setEchoChar((char) 0);
-        } else {
-            viewPass.txtPassConfirmar.setEchoChar('*');
-        }
     }
 
     public static void BtnSalirLogin() {
@@ -142,7 +114,7 @@ public class Controlador {
     }
 
     public static void BtnCancelarCambio() {
-        viewPass.txtPassActual.setText("");
+        viewPass.txtPassAnterior.setText("");
         viewPass.txtPassNuevo.setText("");
         viewPass.txtPassConfirmar.setText("");
         viewPass.txtError.setText("");
@@ -154,17 +126,13 @@ public class Controlador {
     }
 
     public static void BtnAceptar() {
-        String passAnterior = viewPass.txtPassActual.getText();
+        String passAnterior = viewPass.txtPassAnterior.getText();
         String passNuevo = viewPass.txtPassNuevo.getText();
         String passConfirmar = viewPass.txtPassConfirmar.getText();
 
-        passwords.setPassAnterior(passAnterior);
-        passwords.setPassNuevo(passNuevo);
-        passwords.setConfirmarPass(passConfirmar);
-
         if (passAnterior.isEmpty() || passNuevo.isEmpty() || passConfirmar.isEmpty()) {
             viewPass.txtError.setText("por favor rellene todos los campos");
-        } else if (db.CambiarPassword(usuario, passwords)) {
+        } else if (db.CambiarPassword(usuario, passAnterior, passNuevo, passConfirmar)) {
             OcultarCambiarPass();
             MostrarMenu();
             // seteamos la nueva passqord a usuario, para que pueda cambiar otra vez estando en el sistema
@@ -177,7 +145,7 @@ public class Controlador {
     }
 
     public static void LimpiarCamposCambiarPass() {
-        viewPass.txtPassActual.setText("");
+        viewPass.txtPassAnterior.setText("");
         viewPass.txtPassNuevo.setText("");
         viewPass.txtPassConfirmar.setText("");
         viewPass.txtError.setText("");
