@@ -11,7 +11,7 @@ public class Usuario {
     private Date fecInicio;
     private Date fecFinal;
     private int edoCta; 
-
+    
     public Usuario() {
     }
 

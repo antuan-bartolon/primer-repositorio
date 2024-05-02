@@ -28,6 +28,7 @@ public class VistaMenu extends javax.swing.JFrame {
         menuVentas = new javax.swing.JMenu();
         menuCambiarPass = new javax.swing.JMenu();
         menuCerrarSesion = new javax.swing.JMenu();
+        itmMantUser = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -50,7 +51,7 @@ public class VistaMenu extends javax.swing.JFrame {
         jLabel1.setText("MENU");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 15, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 260));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 270));
 
         jMenuBar2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -87,6 +88,17 @@ public class VistaMenu extends javax.swing.JFrame {
         });
         jMenuBar2.add(menuCerrarSesion);
 
+        itmMantUser.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        itmMantUser.setForeground(new java.awt.Color(102, 102, 255));
+        itmMantUser.setText("Mantenimiento de usuarios");
+        itmMantUser.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
+        itmMantUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                itmMantUserMouseClicked(evt);
+            }
+        });
+        jMenuBar2.add(itmMantUser);
+
         setJMenuBar(jMenuBar2);
 
         pack();
@@ -105,12 +117,17 @@ public class VistaMenu extends javax.swing.JFrame {
        controlador.Controlador.ItmCerrarSesion();
     }//GEN-LAST:event_menuCerrarSesionMouseClicked
 
+    private void itmMantUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itmMantUserMouseClicked
+        controlador.Controlador.ItmMantUser();
+    }//GEN-LAST:event_itmMantUserMouseClicked
+
     /**
      * @param args the command line arguments
      */
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JMenu itmMantUser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar2;
