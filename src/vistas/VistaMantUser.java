@@ -1,6 +1,9 @@
 
 package vistas;
 
+import java.awt.Toolkit;
+import javax.swing.JOptionPane;
+
 public class VistaMantUser extends javax.swing.JFrame {
 
 
@@ -83,6 +86,12 @@ public class VistaMantUser extends javax.swing.JFrame {
 
         txtNewPass.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         txtNewPass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtNewPass.setEchoChar('*');
+        txtNewPass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNewPassKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtNewPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, 250, 50));
 
         newFecFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
@@ -102,10 +111,15 @@ public class VistaMantUser extends javax.swing.JFrame {
 
         txtNewEdoCta.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         txtNewEdoCta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtNewEdoCta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNewEdoCtaKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtNewEdoCta, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, 60, 50));
 
         cbxSelecPerson.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
-        cbxSelecPerson.setMaximumRowCount(4);
+        cbxSelecPerson.setMaximumRowCount(10);
         cbxSelecPerson.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "seleccione un usuario" }));
         jPanel1.add(cbxSelecPerson, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 510, 50));
 
@@ -128,6 +142,13 @@ public class VistaMantUser extends javax.swing.JFrame {
         });
         tablaUser.setAlignmentX(1.0F);
         jScrollPane1.setViewportView(tablaUser);
+        if (tablaUser.getColumnModel().getColumnCount() > 0) {
+            tablaUser.getColumnModel().getColumn(2).setMinWidth(0);
+            tablaUser.getColumnModel().getColumn(2).setPreferredWidth(-20);
+            tablaUser.getColumnModel().getColumn(2).setMaxWidth(0);
+            tablaUser.getColumnModel().getColumn(6).setMinWidth(0);
+            tablaUser.getColumnModel().getColumn(6).setMaxWidth(0);
+        }
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 380, 760, 290));
 
@@ -201,7 +222,7 @@ public class VistaMantUser extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        controlador.Controlador.BtnSalirMenu();
+        controlador.Controlador.BtnSalirAMenu();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void BtnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNuevoActionPerformed
@@ -223,6 +244,24 @@ public class VistaMantUser extends javax.swing.JFrame {
     private void btnModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyActionPerformed
        controlador.Controlador.BtnModify();
     }//GEN-LAST:event_btnModifyActionPerformed
+
+    private void txtNewEdoCtaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNewEdoCtaKeyTyped
+        char validar = evt.getKeyChar();
+        if (Character.isLetter(validar)) {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(this, "Digite solo numeros");
+            evt.consume();
+        }
+        if (txtNewEdoCta.getText().length() > 0 ) {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(this, "digite 1 o 0");
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNewEdoCtaKeyTyped
+
+    private void txtNewPassKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNewPassKeyTyped
+        
+    }//GEN-LAST:event_txtNewPassKeyTyped
 
     /**
      * @param args the command line arguments

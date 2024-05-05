@@ -1,17 +1,13 @@
 package controlador;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.*;
 import vistas.*;
 
 public class Controlador {
-
-    public static LocalDate hoy = LocalDate.now();
-    public static String fechaActual = String.valueOf(hoy);
 
     // INSTANCIAS DE LAS CLASES DE NUESTRAS VISTAS
     public static VistaVentas viewVentas = new VistaVentas();
@@ -22,9 +18,9 @@ public class Controlador {
     // INSTANCIAMOS NUESTRO MODELO
     public static DataBase db = new DataBase();
     public static Usuario usuario = new Usuario();
-    public static Usuario us = new Usuario();
+    public static Usuario usuarioEdit = new Usuario();
 
-    // METODOS PARA LA VENTANA DEL LOGIN
+    // METODOS PARA LA VENTA LOGIN
     public static void MostrarLogin() {
         viewLogin.setVisible(true);
         viewLogin.setLocationRelativeTo(null);
@@ -49,18 +45,31 @@ public class Controlador {
     }
 
     public static void MostrarMantUser() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        // Obtener la fecha actual
+        LocalDate fechaActual = LocalDate.now();
+        // Sumar 10 días a la fecha actual para obtener la fecha de fin
+        LocalDate fechaFin = fechaActual.plusDays(10);
+        // Convertir las fechas a String usando el formateador
+        String strFechaActual = fechaActual.format(formatter);
+        String strFechaFin = fechaFin.format(formatter);
+        //
         viewMantUser.setVisible(true);
         viewMantUser.setLocationRelativeTo(null);
-        viewMantUser.newFecIni.setText(fechaActual);
-        viewMantUser.newFecFin.setText(fechaActual);
+        //
+        viewMantUser.newFecIni.setText(strFechaActual);
+        viewMantUser.newFecFin.setText(strFechaFin);
         viewMantUser.txtNewEdoCta.setText("0");
         viewMantUser.btnModify.setEnabled(false);
+        //
         DefaultTableModel listaUsuarios = (DefaultTableModel) viewMantUser.tablaUser.getModel();
         listaUsuarios.setRowCount(0); // limpiamos las filas 
+
         // MUESTRA TODAS LAS PERSONAS EN EL COMBOBOX
         for (Persona persona : db.MostrarPersonas()) {
             viewMantUser.cbxSelecPerson.addItem(persona.NombreCompleto);
         }
+        //
         MostrarTablaUsuario();
     }
 
@@ -139,6 +148,8 @@ public class Controlador {
     }
 
     public static void MostrarUserVenta() {
+        LocalDate hoy = LocalDate.now();
+        String fechaActual = String.valueOf(hoy);
         viewVentas.txtLabel.setText(db.BuscarLogueoSinTipPerson(usuario));
         viewVentas.labelFecha.setText(fechaActual);
     }
@@ -166,7 +177,7 @@ public class Controlador {
         } else if (db.CambiarPassword(usuario, passAnterior, passNuevo, passConfirmar)) {
             OcultarCambiarPass();
             MostrarMenu();
-            // seteamos la nueva passqord a usuario, para que pueda cambiar otra vez estando en el sistema
+            // seteamos la nueva password a usuario, para que pueda cambiar otra vez estando en el sistema
             usuario.setPassword(passConfirmar);
             JOptionPane.showMessageDialog(null, "EL CAMBIO SE HIZO CON EXITO!!!");
         } else {
@@ -192,10 +203,13 @@ public class Controlador {
 
     public static void BtnCancelarMant() {
         LimpiarCamposUsuarios();
+        viewMantUser.btnModify.setEnabled(false);
+        viewMantUser.BtnNuevo.setEnabled(true);
+        viewMantUser.cbxSelecPerson.setEnabled(true);
     }
 
     public static void BtnNuevo() {
-        Usuario u = new Usuario();
+        Usuario usuarioNuevo = new Usuario();
         //
         int cvPerson = viewMantUser.cbxSelecPerson.getSelectedIndex();
         String newUser = viewMantUser.txtNewUser.getText();
@@ -205,16 +219,16 @@ public class Controlador {
         String newEdoCta = viewMantUser.txtNewEdoCta.getText();
 
         if (cvPerson == 0) {
-            JOptionPane.showMessageDialog(null, "Seleccione un usuario para poder continuar");
+            JOptionPane.showMessageDialog(null, "SELECCIONE UN USUARIO PARA PODER CONTINUAR");
         } else if (newUser.isEmpty() || newPass.isEmpty() || newFecIni.isEmpty() || newFecFin.isEmpty() || newEdoCta.isEmpty()) {
             JOptionPane.showMessageDialog(null, "HAY CAMPOS VACIOS");
         } else {
             int edoCta = Integer.parseInt(newEdoCta); // convertimos el estado de cuenta a int
-            u.setCvPerson(cvPerson);
-            u.setLogUser(newUser);
-            u.setPassword(newPass);
-            u.setEdoCta(edoCta);
-            if (db.agregarUsuario(u, newFecIni, newFecFin)) {
+            usuarioNuevo.setCvPerson(cvPerson);
+            usuarioNuevo.setLogUser(newUser);
+            usuarioNuevo.setPassword(newPass);
+            usuarioNuevo.setEdoCta(edoCta);
+            if (db.AgregarUsuario(usuarioNuevo, newFecIni, newFecFin)) {
                 LimpiarCamposUsuarios();
                 MostrarTablaUsuario();
             }
@@ -226,15 +240,15 @@ public class Controlador {
         DefaultTableModel listaUsuarios = (DefaultTableModel) viewMantUser.tablaUser.getModel();
 
         listaUsuarios.setRowCount(0); // limpiamos las filas 
-        for (Usuario user2 : db.ListarUsuarios()) {
+        for (Usuario usersTabla : db.ListarUsuarios()) {
             Object[] fila = new Object[7];
-            fila[0] = user2.getCvPerson();
-            fila[1] = user2.getLogUser();
-            fila[2] = user2.getPassword();
-            fila[3] = user2.getFecInicio();
-            fila[4] = user2.getFecFinal();
-            fila[5] = user2.getEdoCta();
-            fila[6] = user2.getCvUser();
+            fila[0] = usersTabla.getCvPerson();
+            fila[1] = usersTabla.getLogUser();
+            fila[2] = usersTabla.getPassword();
+            fila[3] = usersTabla.getFecInicio();
+            fila[4] = usersTabla.getFecFinal();
+            fila[5] = usersTabla.getEdoCta();
+            fila[6] = usersTabla.getCvUser();
             listaUsuarios.addRow(fila); // aniadimos las filas a la tabla
         }
     }
@@ -257,10 +271,10 @@ public class Controlador {
             viewMantUser.newFecIni.setText(fechai);
             viewMantUser.newFecFin.setText(fechaf);
             viewMantUser.txtNewEdoCta.setText(edoCta);
-            us.setCvUser(cvUser);
+            usuarioEdit.setCvUser(cvUser);
 
         } else {
-            JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA");
+            JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA PARA EDITAR");
         }
     }
 
@@ -271,10 +285,11 @@ public class Controlador {
         String updFecfn = viewMantUser.newFecFin.getText();
         String EdoCta = viewMantUser.txtNewEdoCta.getText();
         int updEdCta = Integer.parseInt(EdoCta);
-        us.setLogUser(updUser);
-        us.setPassword(updPass);
-        us.setEdoCta(updEdCta);
-        if (db.ModificarUsuario(us, updFecin, updFecfn)) {
+        usuarioEdit.setLogUser(updUser);
+        usuarioEdit.setPassword(updPass);
+        usuarioEdit.setEdoCta(updEdCta);
+        if (db.ModificarUsuario(usuarioEdit, updFecin, updFecfn)) {
+            JOptionPane.showMessageDialog(null, "UNA PERSONA FUE MODIFICADA");
             System.out.println("1 persona modificada");
             MostrarTablaUsuario();
             LimpiarCamposUsuarios();
@@ -285,23 +300,23 @@ public class Controlador {
 
     public static void BtnEliminarUsuario() {
         int fila = viewMantUser.tablaUser.getSelectedRow();
-        Usuario usb = new Usuario();
+        Usuario usuarioDelete = new Usuario();
         if (fila >= 0) {
-            int confirmar = JOptionPane.showConfirmDialog(null, "en realidad desea eliminar el registro? ");
+            int confirmar = JOptionPane.showConfirmDialog(null, "EN REALIDAD DESEA BORRAR EL REGISTRO? ");
             if (confirmar == JOptionPane.YES_OPTION) {
                 int cvUser = Integer.parseInt(viewMantUser.tablaUser.getValueAt(fila, 6).toString());
-                usb.setCvUser(cvUser);
-                db.borrarUsuario(usb);
+                usuarioDelete.setCvUser(cvUser);
+                db.BorrarUsuario(usuarioDelete);
                 MostrarTablaUsuario();
                 System.out.println("se borro un registro");
+                JOptionPane.showMessageDialog(null, "UN USUARIO FUE ELIMINADO");
             }
-
         } else {
-            JOptionPane.showMessageDialog(null, "NO HAS SELECCIONADO UNA FILA");
+            JOptionPane.showMessageDialog(null, "NO HAS SELECCIONADO UN REGISTRO PARA BORRAR");
         }
     }
 
-    public static void BtnSalirMenu() {
+    public static void BtnSalirAMenu() {
         MostrarMenu();
         OcultarMantUser();
     }
