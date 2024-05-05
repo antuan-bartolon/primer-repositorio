@@ -1,19 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package vistas;
 
-/**
- *
- * @author BVAJ
- */
 public class VistaMantUser extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VistaMantUser
-     */
+
     public VistaMantUser() {
         initComponents();
     }
@@ -42,12 +32,13 @@ public class VistaMantUser extends javax.swing.JFrame {
         cbxSelecPerson = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaUser = new javax.swing.JTable();
-        btnModificar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
         BtnNuevo = new javax.swing.JButton();
-        btnCons = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        btnModify = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Mantenimiento de usuarios");
@@ -92,7 +83,7 @@ public class VistaMantUser extends javax.swing.JFrame {
 
         txtNewPass.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         txtNewPass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jPanel1.add(txtNewPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, 300, 50));
+        jPanel1.add(txtNewPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, 250, 50));
 
         newFecFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
         newFecFin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -124,24 +115,30 @@ public class VistaMantUser extends javax.swing.JFrame {
 
             },
             new String [] {
-                "cvPerson", "Usuario", "Fecha inicio", "Fecha fin", "Estado de cuenta"
+                "cvPerson", "Usuario", "passUser", "Fecha inicio", "Fecha fin", "Estado de cuenta", "CvUser"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaUser.setAlignmentX(1.0F);
         jScrollPane1.setViewportView(tablaUser);
-        if (tablaUser.getColumnModel().getColumnCount() > 0) {
-            tablaUser.getColumnModel().getColumn(0).setHeaderValue("cvPerson");
-            tablaUser.getColumnModel().getColumn(1).setHeaderValue("Usuario");
-            tablaUser.getColumnModel().getColumn(2).setHeaderValue("Fecha inicio");
-            tablaUser.getColumnModel().getColumn(3).setHeaderValue("Fecha fin");
-            tablaUser.getColumnModel().getColumn(4).setHeaderValue("Estado de cuenta");
-        }
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 360, 760, 320));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 380, 760, 290));
 
-        btnModificar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btnModificar.setText("Modificar");
-        jPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 260, 120, 50));
+        btnEditar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 260, 90, 50));
 
         BtnNuevo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         BtnNuevo.setText("Nuevo");
@@ -152,18 +149,14 @@ public class VistaMantUser extends javax.swing.JFrame {
         });
         jPanel1.add(BtnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 260, 120, 50));
 
-        btnCons.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btnCons.setText("Consultar");
-        btnCons.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnCons, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 260, 120, 50));
-
         btnBorrar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnBorrar.setText("Borrar");
-        jPanel1.add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 260, 120, 50));
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 260, 120, 50));
 
         btnCancelar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -183,6 +176,21 @@ public class VistaMantUser extends javax.swing.JFrame {
         });
         jPanel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 620, 120, 50));
 
+        btnModify.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnModify.setText("Modificar");
+        btnModify.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModifyActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnModify, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 260, 140, 50));
+
+        jLabel1.setBackground(new java.awt.Color(51, 51, 51));
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel1.setText("Seleccione un usuario ");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 350, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 700));
 
         pack();
@@ -200,13 +208,21 @@ public class VistaMantUser extends javax.swing.JFrame {
         controlador.Controlador.BtnNuevo();
     }//GEN-LAST:event_BtnNuevoActionPerformed
 
-    private void btnConsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsActionPerformed
-        controlador.Controlador.BtnConsultar();
-    }//GEN-LAST:event_btnConsActionPerformed
-
     private void newFecFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newFecFinActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_newFecFinActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        controlador.Controlador.BtnEditar();
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+        controlador.Controlador.BtnEliminarUsuario();
+    }//GEN-LAST:event_btnBorrarActionPerformed
+
+    private void btnModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyActionPerformed
+       controlador.Controlador.BtnModify();
+    }//GEN-LAST:event_btnModifyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -247,10 +263,11 @@ public class VistaMantUser extends javax.swing.JFrame {
     public javax.swing.JButton BtnNuevo;
     public javax.swing.JButton btnBorrar;
     public javax.swing.JButton btnCancelar;
-    public javax.swing.JButton btnCons;
-    public javax.swing.JButton btnModificar;
+    public javax.swing.JButton btnEditar;
+    public javax.swing.JButton btnModify;
     public javax.swing.JButton btnSalir;
     public javax.swing.JComboBox<String> cbxSelecPerson;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

@@ -3,8 +3,6 @@ package controlador;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.*;
@@ -24,6 +22,7 @@ public class Controlador {
     // INSTANCIAMOS NUESTRO MODELO
     public static DataBase db = new DataBase();
     public static Usuario usuario = new Usuario();
+    public static Usuario us = new Usuario();
 
     // METODOS PARA LA VENTANA DEL LOGIN
     public static void MostrarLogin() {
@@ -55,12 +54,14 @@ public class Controlador {
         viewMantUser.newFecIni.setText(fechaActual);
         viewMantUser.newFecFin.setText(fechaActual);
         viewMantUser.txtNewEdoCta.setText("0");
+        viewMantUser.btnModify.setEnabled(false);
         DefaultTableModel listaUsuarios = (DefaultTableModel) viewMantUser.tablaUser.getModel();
         listaUsuarios.setRowCount(0); // limpiamos las filas 
         // MUESTRA TODAS LAS PERSONAS EN EL COMBOBOX
         for (Persona persona : db.MostrarPersonas()) {
             viewMantUser.cbxSelecPerson.addItem(persona.NombreCompleto);
         }
+        MostrarTablaUsuario();
     }
 
     public static void OcultarLogin() {
@@ -187,8 +188,6 @@ public class Controlador {
         viewMantUser.txtNewEdoCta.setText("");
         viewMantUser.newFecIni.setText("");
         viewMantUser.newFecFin.setText("");
-        DefaultTableModel listaUsuarios = (DefaultTableModel) viewMantUser.tablaUser.getModel();
-        listaUsuarios.setRowCount(0); // limpiamos las filas 
     }
 
     public static void BtnCancelarMant() {
@@ -206,7 +205,7 @@ public class Controlador {
         String newEdoCta = viewMantUser.txtNewEdoCta.getText();
 
         if (cvPerson == 0) {
-            JOptionPane.showMessageDialog(null, "NO HAS SELECCIONADO UN USUARIO");
+            JOptionPane.showMessageDialog(null, "Seleccione un usuario para poder continuar");
         } else if (newUser.isEmpty() || newPass.isEmpty() || newFecIni.isEmpty() || newFecFin.isEmpty() || newEdoCta.isEmpty()) {
             JOptionPane.showMessageDialog(null, "HAY CAMPOS VACIOS");
         } else {
@@ -215,24 +214,90 @@ public class Controlador {
             u.setLogUser(newUser);
             u.setPassword(newPass);
             u.setEdoCta(edoCta);
-            db.agregarUsuario(u, newFecIni, newFecFin); 
-            LimpiarCamposUsuarios();
+            if (db.agregarUsuario(u, newFecIni, newFecFin)) {
+                LimpiarCamposUsuarios();
+                MostrarTablaUsuario();
+            }
         }
         //System.out.println(viewMantUser.cbxSelecPerson.getSelectedIndex());
     }
 
-    public static void BtnConsultar() {
+    public static void MostrarTablaUsuario() {
         DefaultTableModel listaUsuarios = (DefaultTableModel) viewMantUser.tablaUser.getModel();
+
         listaUsuarios.setRowCount(0); // limpiamos las filas 
         for (Usuario user2 : db.ListarUsuarios()) {
-            Object[] fila = new Object[6];
+            Object[] fila = new Object[7];
             fila[0] = user2.getCvPerson();
             fila[1] = user2.getLogUser();
-            //fila[] = user2.getPassword();
-            fila[2] = user2.getFecInicio();
-            fila[3] = user2.getFecFinal();
-            fila[4] = user2.getEdoCta();
-            listaUsuarios.addRow(fila); // aniadimos las filas la tabla
+            fila[2] = user2.getPassword();
+            fila[3] = user2.getFecInicio();
+            fila[4] = user2.getFecFinal();
+            fila[5] = user2.getEdoCta();
+            fila[6] = user2.getCvUser();
+            listaUsuarios.addRow(fila); // aniadimos las filas a la tabla
+        }
+    }
+
+    public static void BtnEditar() {
+        int fila = viewMantUser.tablaUser.getSelectedRow();
+
+        if (fila >= 0) {
+            viewMantUser.BtnNuevo.setEnabled(false);
+            viewMantUser.btnModify.setEnabled(true);
+            viewMantUser.cbxSelecPerson.setEnabled(false);
+            String logUser = viewMantUser.tablaUser.getValueAt(fila, 1).toString();
+            String passUser = viewMantUser.tablaUser.getValueAt(fila, 2).toString();
+            String fechai = viewMantUser.tablaUser.getValueAt(fila, 3).toString();
+            String fechaf = viewMantUser.tablaUser.getValueAt(fila, 4).toString();
+            String edoCta = viewMantUser.tablaUser.getValueAt(fila, 5).toString();
+            int cvUser = Integer.parseInt(viewMantUser.tablaUser.getValueAt(fila, 6).toString());
+            viewMantUser.txtNewUser.setText(logUser);
+            viewMantUser.txtNewPass.setText(passUser);
+            viewMantUser.newFecIni.setText(fechai);
+            viewMantUser.newFecFin.setText(fechaf);
+            viewMantUser.txtNewEdoCta.setText(edoCta);
+            us.setCvUser(cvUser);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA");
+        }
+    }
+
+    public static void BtnModify() {
+        String updUser = viewMantUser.txtNewUser.getText();
+        String updPass = viewMantUser.txtNewPass.getText();
+        String updFecin = viewMantUser.newFecIni.getText();
+        String updFecfn = viewMantUser.newFecFin.getText();
+        String EdoCta = viewMantUser.txtNewEdoCta.getText();
+        int updEdCta = Integer.parseInt(EdoCta);
+        us.setLogUser(updUser);
+        us.setPassword(updPass);
+        us.setEdoCta(updEdCta);
+        if (db.ModificarUsuario(us, updFecin, updFecfn)) {
+            System.out.println("1 persona modificada");
+            MostrarTablaUsuario();
+            LimpiarCamposUsuarios();
+            viewMantUser.btnModify.setEnabled(false);
+            viewMantUser.cbxSelecPerson.setEnabled(true);
+        }
+    }
+
+    public static void BtnEliminarUsuario() {
+        int fila = viewMantUser.tablaUser.getSelectedRow();
+        Usuario usb = new Usuario();
+        if (fila >= 0) {
+            int confirmar = JOptionPane.showConfirmDialog(null, "en realidad desea eliminar el registro? ");
+            if (confirmar == JOptionPane.YES_OPTION) {
+                int cvUser = Integer.parseInt(viewMantUser.tablaUser.getValueAt(fila, 6).toString());
+                usb.setCvUser(cvUser);
+                db.borrarUsuario(usb);
+                MostrarTablaUsuario();
+                System.out.println("se borro un registro");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "NO HAS SELECCIONADO UNA FILA");
         }
     }
 

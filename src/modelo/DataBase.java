@@ -59,7 +59,7 @@ public class DataBase {
             }
         } catch (SQLException ex) {
             System.out.println("ERROR EN: ValidarUsuario: " + ex.getMessage());
-        }
+        } 
         JOptionPane.showMessageDialog(null, "USUARIO O CONTRASEÑA INCORRECTOS");
         return false;
     }
@@ -141,6 +141,7 @@ public class DataBase {
         } catch (Exception e) {
             System.out.println("ERROR EN: CambiarPasswordTry1: " + e.getMessage());
         }
+        //
         try {
             ps = conexion.prepareStatement(cambiarPass);
             ps.setString(1, passConfirmar);
@@ -150,7 +151,7 @@ public class DataBase {
         } catch (SQLException ex) {
             System.out.println("ERROR EN: CambiarPasswordTry2: " + ex.getMessage());
         }
-        // se hace el vambio si esque todo es valido
+        // se hace el cambio si esque todo es valido
         return true;
     }
 
@@ -175,10 +176,6 @@ public class DataBase {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 nombresCompletos.add(new Persona(rs.getInt("cvPerson"), rs.getString("NombreCompleto")));
-                //Persona p = new Persona();
-                //p.setCvPerson(rs.getInt("CvPerson"));
-                //p.setNombreCompleto(rs.getString("NombreCompleto"));
-                //nombresCompletos.add(p);
             }
         } catch (SQLException ex) {
             System.out.println("ERROR EN: MostrarPersonas: " + ex.getMessage());
@@ -193,10 +190,11 @@ public class DataBase {
         try {
             PreparedStatement ps = conexion.prepareStatement(consultaSql);
             ResultSet rs = ps.executeQuery();
-            System.out.println("CONSULTA EXITOSA!");
+            System.out.println("MOSTRANDO USUARIOS!");
             while (rs.next()) {
                 Usuario user2 = new Usuario();
-                user2.setCvPerson(rs.getInt("cvPerson"));
+                user2.setCvUser(rs.getInt("cvUser"));
+                user2.setCvPerson(rs.getInt("cvPerson"));   
                 user2.setLogUser(rs.getString("logUser"));
                 user2.setPassword(rs.getString("passUser"));
                 user2.setFecInicio(rs.getDate("fecIni"));
@@ -211,13 +209,13 @@ public class DataBase {
     }
 
     // clase para el insert
-    public void agregarUsuario(Usuario newUser, String fecIni, String fecFin) {
+    public boolean agregarUsuario(Usuario newUser, String fecIni, String fecFin) {
         //Usuario u = new Usuario();
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         try {
             java.util.Date fechaUtil = formato.parse(fecIni);
             java.sql.Date fechaIni = new java.sql.Date(fechaUtil.getTime());
-            System.out.println("Fecha SQL: " + fechaIni);
+            System.out.println("Fecha SQL Inicio agregar usuario: " + fechaIni);
             newUser.setFecInicio(fechaIni);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -226,7 +224,7 @@ public class DataBase {
         try {
             java.util.Date fechaUtil = formato.parse(fecFin);
             java.sql.Date fechaFin = new java.sql.Date(fechaUtil.getTime());
-            System.out.println("Fecha SQL: " + fechaFin);
+            System.out.println("Fecha SQL Final agragar usuario: " + fechaFin);
             newUser.setFecFinal(fechaFin);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -247,6 +245,58 @@ public class DataBase {
         } catch (SQLException e) {
             System.out.println("ERROR en: agregarUsuario: " + e.getMessage());
         }
+        return true;
+    }
+    
+    public boolean ModificarUsuario(Usuario us,String fecini, String fecfin){
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            java.util.Date fechaUtil = formato.parse(fecini);
+            java.sql.Date fechaIni = new java.sql.Date(fechaUtil.getTime());
+            System.out.println("Fecha SQL Inicio modificarUsuario: " + fechaIni);
+            us.setFecInicio(fechaIni);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.out.println("ERROR AL CONVERTIR FECHA");
+        }
+        try {
+            java.util.Date fechaUtil = formato.parse(fecfin);
+            java.sql.Date fechaFin = new java.sql.Date(fechaUtil.getTime());
+            System.out.println("Fecha SQL Final modificarUsuario: " + fechaFin);
+            us.setFecFinal(fechaFin);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.out.println("ERROR AL CONVERTIR FECHA");
+        }
+        
+        String modificar = "UPDATE musuario set logUser = ?, passUser = ?, FecIni = ?, Fecfin = ?, EdoCta = ? WHERE cvUser = ?";
+        try {
+            ps = conexion.prepareStatement(modificar);
+            ps.setString(1, us.getLogUser());
+            ps.setString(2, us.getPassword());
+            ps.setDate(3, (Date) us.getFecInicio());
+            ps.setDate(4, (Date) us.getFecFinal());
+            ps.setInt(5, us.getEdoCta());
+            ps.setInt(6, us.getCvUser());
+            ps.execute();
+        } catch (SQLException ex) {
+            System.out.println("ERROR en: ModificarUsuario: "+ex.getMessage());
+        }
+        
+        return true;
+    }
+    
+    public void borrarUsuario(Usuario usb){
+
+        String deleteFrom = "DELETE FROM musuario WHERE CvUser = ?";
+        try {
+            ps = conexion.prepareStatement(deleteFrom);
+            ps.setInt(1, usb.getCvUser());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("ERROR en: borrarUsuario: "+e.getMessage());
+        }
+        
     }
 
 }
