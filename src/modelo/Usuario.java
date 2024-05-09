@@ -12,10 +12,20 @@ public class Usuario {
     private Date fecFinal;
     private int edoCta; 
     
+    private String DatosPersonales;
+
+    public String getDatosPersonales() {
+        return DatosPersonales;
+    }
+
+    public void setDatosPersonales(String DatosPersonales) {
+        this.DatosPersonales = DatosPersonales;
+    }
+    
     public Usuario() {
     }
 
-    public Usuario(int cvUser, int cvPerson, String logUser, String Password, Date fecInicio, Date fecFinal, int edoCta) {
+    public Usuario(int cvUser, int cvPerson, String logUser, String Password, Date fecInicio, Date fecFinal, int edoCta,String DatosPersonales) {
         this.cvUser = cvUser;
         this.cvPerson = cvPerson;
         this.logUser = logUser;
@@ -23,6 +33,7 @@ public class Usuario {
         this.fecInicio = fecInicio;
         this.fecFinal = fecFinal;
         this.edoCta = edoCta;
+        this.DatosPersonales = DatosPersonales;
     }
 
     public int getCvUser() {

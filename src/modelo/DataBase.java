@@ -42,7 +42,7 @@ public class DataBase {
                 if (rs.getInt("edoCta") == 0) {
                     JOptionPane.showMessageDialog(null, "CUENTA CADUCADA\nContacte al administrador");
                     return false;
-                }  else if (hoy.equals(fecIni)) {
+                } else if (hoy.equals(fecIni)) {
                     JOptionPane.showMessageDialog(null, "TU CUENTA SE ACTIVO HOY");
                     return true;
                 } else if (hoy.isBefore(fecIni)) {
@@ -78,19 +78,18 @@ public class DataBase {
                 + "AND mdtperson.CvApePat = Pater.CvApellido \n"
                 + "AND mdtperson.CvApeMat = Mater.CvApellido\n"
                 + "AND ctpperson.CvTpPerson = mdtperson.CvTpPerson;";
-        String nombre = " ";
+        String nombreCompleto = " ";
         try {
             ps = conexion.prepareStatement(buscar);
             ps.setString(1, user2.getLogUser());
             rs = ps.executeQuery();
             if (rs.next()) {
-                nombre = rs.getString("Nombre");
+                nombreCompleto = rs.getString("Nombre");
             }
         } catch (SQLException ex) {
             System.out.println("ERROR EN: BuscarLogueo: " + ex.getMessage());
         }
-
-        return nombre;
+        return nombreCompleto;
     }
 
     public String BuscarLogueoSinTipPerson(Usuario usuario) {
@@ -102,19 +101,18 @@ public class DataBase {
                 + "AND mdtperson.CvNombre = cNombre.CvNombre\n"
                 + "AND mdtperson.CvApePat = Pater.CvApellido \n"
                 + "AND mdtperson.CvApeMat = Mater.CvApellido";
-        String nombre = " ";
+        String nombreSinPuesto = " ";
         try {
             ps = conexion.prepareStatement(buscar);
             ps.setString(1, usuario.getLogUser());
             rs = ps.executeQuery();
             if (rs.next()) {
-                nombre = rs.getString("Nombre");
+                nombreSinPuesto = rs.getString("Nombre");
             }
         } catch (SQLException ex) {
             System.out.println("ERROR EN: BuscarLogSinTipoPerson: " + ex.getMessage());
         }
-
-        return nombre;
+        return nombreSinPuesto;
     }
 
     public boolean CambiarPassword(Usuario usuario, String passAnterior, String passNuevo, String passConfirmar) {
@@ -160,19 +158,7 @@ public class DataBase {
 
     public ArrayList<Persona> MostrarPersonas() {
         ArrayList<Persona> nombresCompletos = new ArrayList<>();
-        String consulta = "SELECT \n"
-                + "mDtPerson.CvPerson,"
-                + "CONCAT(cNombre.DsNombre, ' ',Pater.DsApellido, ' ', \n"
-                + "Mater.DsApellido,' (',ctpperson.DsTpPerson,')') AS NombreCompleto \n"
-                + "FROM \n"
-                + "mDtPerson, cNombre, \n"
-                + "cApellido Pater,cApellido Mater,ctpperson\n"
-                + "WHERE \n"
-                + "mDtPerson.CvNombre = cNombre.CvNombre\n"
-                + "AND mDtPerson.CvApePat = Pater.CvApellido\n"
-                + "AND mDtPerson.CvApeMat = Mater.CvApellido \n"
-                + "AND mDtperson.CvTpPerson = cTpPerson.CvTpPerson\n"
-                + "ORDER BY CvPerson;";
+        String consulta = "call mostrarPersonas()";
         try {
             PreparedStatement ps = conexion.prepareStatement(consulta);
             ResultSet rs = ps.executeQuery();
@@ -187,7 +173,7 @@ public class DataBase {
 
     public ArrayList<Usuario> ListarUsuarios() {
         ArrayList<Usuario> usuariosList = new ArrayList<>();
-        String consultaSql = "SELECT * FROM musuario;";
+        String consultaSql = "call listarUsuarios();";
         try {
             PreparedStatement ps = conexion.prepareStatement(consultaSql);
             ResultSet rs = ps.executeQuery();
@@ -201,6 +187,7 @@ public class DataBase {
                 user2.setFecInicio(rs.getDate("fecIni"));
                 user2.setFecFinal(rs.getDate("fecFin"));
                 user2.setEdoCta(rs.getInt("edoCta"));
+                user2.setDatosPersonales(rs.getString("DatosCompletos"));
                 usuariosList.add(user2);
             }
         } catch (Exception e) {
@@ -219,8 +206,27 @@ public class DataBase {
         // Validar la longitud de la contraseña
         if (usuario2.getPassword().length() < 4) {
             JOptionPane.showMessageDialog(null, "La contraseña debe tener al menos 4 caracteres.");
-            //System.out.println("La contraseña debe tener al menos 4 caracteres.");
             return false; // Retornar false si la contraseña es demasiado corta
+        }
+        //
+        String buscarRepetidos = "SELECT logUser, passUser FROM musuario";
+        try {
+            ps = conexion.prepareStatement(buscarRepetidos);
+            rs = ps.executeQuery();
+            while (rs.next()) {                
+                String logObtenido = rs.getString("logUser");
+                String passObtenido = rs.getString("passUser");
+                if (usuario2.getLogUser().equals(logObtenido)) {
+                    JOptionPane.showMessageDialog(null, "El nombre de usuario ya existe. intente con otro.");
+                    return false;
+                } else if (usuario2.getPassword().equals(passObtenido)) {
+                    JOptionPane.showMessageDialog(null, "El Password ya existe, intente con otro.");
+                    return false;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR en veririficar logs y pass: "+e.getMessage());
+            return false;
         }
 
         try {
@@ -251,10 +257,10 @@ public class DataBase {
             System.out.println("ERROR AL CONVERTIR FECHA");
             return false;
         }
-
         // Insertar en la base de datos
         String insertInto = "INSERT INTO musuario (cvPerson, logUser, passUser, fecIni, fecFin, edoCta) VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = conexion.prepareStatement(insertInto)) {
+        try {
+            ps = conexion.prepareStatement(insertInto);
             ps.setInt(1, usuario2.getCvPerson());
             ps.setString(2, usuario2.getLogUser());
             ps.setString(3, usuario2.getPassword());
@@ -275,12 +281,29 @@ public class DataBase {
         LocalDate hoy = LocalDate.now(); // Fecha actual
         java.sql.Date fechaIniSql = null;
         java.sql.Date fechaFinSql = null;
-        
+
         // Validar la longitud de la contraseña
         if (usuarioEdit.getPassword().length() < 4) {
             JOptionPane.showMessageDialog(null, "La contraseña debe tener al menos 4 caracteres.");
             //System.out.println("La contraseña debe tener al menos 4 caracteres.");
             return false; // Retornar false si la contraseña es demasiado corta
+        }
+        
+         String buscarRepetidos = "SELECT logUser, passUser FROM musuario";
+        try {
+            ps = conexion.prepareStatement(buscarRepetidos);
+            rs = ps.executeQuery();
+            while (rs.next()) {                
+                //String logObtenido = rs.getString("logUser");
+                String passObtenido = rs.getString("passUser");
+                 if (usuarioEdit.getPassword().equals(passObtenido)) {
+                    JOptionPane.showMessageDialog(null, "El Password ya existe, intente con otro.");
+                    return false;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR en veririficar logs y pass de ModificarUsuario: "+e.getMessage());
+            return false;
         }
 
         try {

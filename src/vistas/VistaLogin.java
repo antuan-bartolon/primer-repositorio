@@ -121,7 +121,7 @@ public class VistaLogin extends javax.swing.JFrame {
                 verPassMouseClicked(evt);
             }
         });
-        jPanel1.add(verPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 330, -1, -1));
+        jPanel1.add(verPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, -1, -1));
 
         ocultarPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/esconder.png"))); // NOI18N
         ocultarPass.addMouseListener(new java.awt.event.MouseAdapter() {

@@ -9,6 +9,9 @@ public class VistaMantUser extends javax.swing.JFrame {
 
     public VistaMantUser() {
         initComponents();
+        btnAgregar.setVisible(false);
+        btnModify.setVisible(false);
+        ocultarPass.setVisible(false);
     }
 
     /**
@@ -21,107 +24,39 @@ public class VistaMantUser extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        txtNewUser = new javax.swing.JTextField();
-        txtNewPass = new javax.swing.JPasswordField();
-        newFecFin = new javax.swing.JFormattedTextField();
-        newFecIni = new javax.swing.JFormattedTextField();
-        txtNewEdoCta = new javax.swing.JTextField();
-        cbxSelecPerson = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaUser = new javax.swing.JTable();
-        btnEditar = new javax.swing.JButton();
-        BtnNuevo = new javax.swing.JButton();
-        btnBorrar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
+        seccionData = new javax.swing.JLayeredPane();
+        jLabel4 = new javax.swing.JLabel();
+        txtNewUser = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        combo = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        txtNewPass = new javax.swing.JPasswordField();
+        jLabel6 = new javax.swing.JLabel();
+        newFecIni = new javax.swing.JFormattedTextField();
+        newFecFin = new javax.swing.JFormattedTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtNewEdoCta = new javax.swing.JTextField();
+        label1 = new javax.swing.JLabel();
+        label0 = new javax.swing.JLabel();
+        verPass = new javax.swing.JLabel();
+        ocultarPass = new javax.swing.JLabel();
+        jLayeredPane2 = new javax.swing.JLayeredPane();
         btnSalir = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnBorrar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
         btnModify = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        BtnNuevo = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Mantenimiento de usuarios");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 28)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel2.setText("Nombre del usuario:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 23, -1, -1));
-
-        jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel3.setText("Estado de la cuenta:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, -1));
-
-        jLabel4.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel4.setText("Login del usuario:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 92, -1, 40));
-
-        jLabel5.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel5.setText("Password del usuario:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
-
-        jLabel6.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel6.setText("Fecha de inicio:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 102, -1, 30));
-
-        jLabel7.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel7.setText("Fecha de termino:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 160, -1, 40));
-
-        txtNewUser.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        txtNewUser.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jPanel1.add(txtNewUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 300, 50));
-
-        txtNewPass.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        txtNewPass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtNewPass.setEchoChar('*');
-        txtNewPass.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNewPassKeyTyped(evt);
-            }
-        });
-        jPanel1.add(txtNewPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, 250, 50));
-
-        newFecFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
-        newFecFin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        newFecFin.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
-        newFecFin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newFecFinActionPerformed(evt);
-            }
-        });
-        jPanel1.add(newFecFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 160, 220, 40));
-
-        newFecIni.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
-        newFecIni.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        newFecIni.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
-        jPanel1.add(newFecIni, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 100, 220, 40));
-
-        txtNewEdoCta.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        txtNewEdoCta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtNewEdoCta.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNewEdoCtaKeyTyped(evt);
-            }
-        });
-        jPanel1.add(txtNewEdoCta, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, 60, 50));
-
-        cbxSelecPerson.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
-        cbxSelecPerson.setMaximumRowCount(10);
-        cbxSelecPerson.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "seleccione un usuario" }));
-        jPanel1.add(cbxSelecPerson, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 510, 50));
 
         tablaUser.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         tablaUser.setModel(new javax.swing.table.DefaultTableModel(
@@ -129,7 +64,7 @@ public class VistaMantUser extends javax.swing.JFrame {
 
             },
             new String [] {
-                "cvPerson", "Usuario", "passUser", "Fecha inicio", "Fecha fin", "Estado de cuenta", "CvUser"
+                "CvUser", "Nombre", "Usuario", "passUser", "Fecha inicio", "Fecha fin", "Estado de cuenta"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -143,50 +78,146 @@ public class VistaMantUser extends javax.swing.JFrame {
         tablaUser.setAlignmentX(1.0F);
         jScrollPane1.setViewportView(tablaUser);
         if (tablaUser.getColumnModel().getColumnCount() > 0) {
-            tablaUser.getColumnModel().getColumn(2).setMinWidth(0);
-            tablaUser.getColumnModel().getColumn(2).setPreferredWidth(-20);
-            tablaUser.getColumnModel().getColumn(2).setMaxWidth(0);
-            tablaUser.getColumnModel().getColumn(6).setMinWidth(0);
-            tablaUser.getColumnModel().getColumn(6).setMaxWidth(0);
+            tablaUser.getColumnModel().getColumn(1).setPreferredWidth(200);
+            tablaUser.getColumnModel().getColumn(2).setPreferredWidth(50);
+            tablaUser.getColumnModel().getColumn(3).setMinWidth(0);
+            tablaUser.getColumnModel().getColumn(3).setPreferredWidth(-20);
+            tablaUser.getColumnModel().getColumn(3).setMaxWidth(0);
+            tablaUser.getColumnModel().getColumn(6).setPreferredWidth(50);
         }
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 380, 760, 290));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 950, 160));
 
-        btnEditar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btnEditar.setText("Editar");
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+        seccionData.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "CAPTURA DE DATOS", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(51, 51, 51))); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel4.setText("Login del usuario:");
+        seccionData.add(jLabel4);
+        jLabel4.setBounds(90, 80, 154, 40);
+
+        txtNewUser.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        txtNewUser.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        seccionData.add(txtNewUser);
+        txtNewUser.setBounds(300, 90, 250, 30);
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel2.setText("Nombre del usuario:");
+        seccionData.add(jLabel2);
+        jLabel2.setBounds(50, 30, 240, 37);
+
+        combo.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
+        combo.setMaximumRowCount(10);
+        combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "seleccione un usuario" }));
+        seccionData.add(combo);
+        combo.setBounds(300, 30, 420, 40);
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel5.setText("Password del usuario:");
+        seccionData.add(jLabel5);
+        jLabel5.setBounds(90, 140, 195, 26);
+
+        txtNewPass.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        txtNewPass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtNewPass.setEchoChar('*');
+        txtNewPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
+                txtNewPassActionPerformed(evt);
             }
         });
-        jPanel1.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 260, 90, 50));
-
-        BtnNuevo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        BtnNuevo.setText("Nuevo");
-        BtnNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnNuevoActionPerformed(evt);
+        txtNewPass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNewPassKeyTyped(evt);
             }
         });
-        jPanel1.add(BtnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 260, 120, 50));
+        seccionData.add(txtNewPass);
+        txtNewPass.setBounds(300, 140, 250, 30);
 
-        btnBorrar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btnBorrar.setText("Borrar");
-        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel6.setText("Fecha de inicio:");
+        seccionData.add(jLabel6);
+        jLabel6.setBounds(90, 190, 137, 30);
+
+        newFecIni.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
+        newFecIni.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        newFecIni.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        seccionData.add(newFecIni);
+        newFecIni.setBounds(300, 190, 220, 30);
+
+        newFecFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
+        newFecFin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        newFecFin.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        newFecFin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBorrarActionPerformed(evt);
+                newFecFinActionPerformed(evt);
             }
         });
-        jPanel1.add(btnBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 260, 120, 50));
+        seccionData.add(newFecFin);
+        newFecFin.setBounds(300, 230, 220, 30);
 
-        btnCancelar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btnCancelar.setText("Cancelar");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+        jLabel7.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel7.setText("Fecha de termino:");
+        seccionData.add(jLabel7);
+        jLabel7.setBounds(90, 230, 159, 20);
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 20)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel3.setText("Estado de la cuenta:");
+        seccionData.add(jLabel3);
+        jLabel3.setBounds(90, 280, 181, 30);
+
+        txtNewEdoCta.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        txtNewEdoCta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtNewEdoCta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
+                txtNewEdoCtaActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 620, 120, 50));
+        txtNewEdoCta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNewEdoCtaKeyTyped(evt);
+            }
+        });
+        seccionData.add(txtNewEdoCta);
+        txtNewEdoCta.setBounds(300, 280, 30, 30);
+
+        label1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        label1.setForeground(new java.awt.Color(0, 204, 102));
+        label1.setText("AREA HABILITADA");
+        seccionData.add(label1);
+        label1.setBounds(520, 300, 180, 24);
+
+        label0.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        label0.setForeground(new java.awt.Color(255, 102, 102));
+        label0.setText("AREA DESHABILITADA");
+        seccionData.add(label0);
+        label0.setBounds(500, 300, 210, 24);
+
+        verPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/vista.png"))); // NOI18N
+        verPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                verPassMouseClicked(evt);
+            }
+        });
+        seccionData.add(verPass);
+        verPass.setBounds(560, 140, 24, 24);
+
+        ocultarPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/esconder.png"))); // NOI18N
+        ocultarPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ocultarPassMouseClicked(evt);
+            }
+        });
+        seccionData.add(ocultarPass);
+        ocultarPass.setBounds(560, 140, 24, 24);
+
+        jPanel1.add(seccionData, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 740, 340));
+
+        jLayeredPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "ACCIONES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12), new java.awt.Color(51, 51, 51))); // NOI18N
 
         btnSalir.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnSalir.setText("Salir");
@@ -195,7 +226,38 @@ public class VistaMantUser extends javax.swing.JFrame {
                 btnSalirActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 620, 120, 50));
+        jLayeredPane2.add(btnSalir);
+        btnSalir.setBounds(30, 200, 140, 50);
+
+        btnCancelar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        jLayeredPane2.add(btnCancelar);
+        btnCancelar.setBounds(30, 260, 140, 50);
+
+        btnBorrar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnBorrar.setText("Borrar");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
+        jLayeredPane2.add(btnBorrar);
+        btnBorrar.setBounds(30, 140, 140, 50);
+
+        btnEditar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+        jLayeredPane2.add(btnEditar);
+        btnEditar.setBounds(30, 80, 140, 50);
 
         btnModify.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btnModify.setText("Modificar");
@@ -204,29 +266,46 @@ public class VistaMantUser extends javax.swing.JFrame {
                 btnModifyActionPerformed(evt);
             }
         });
-        jPanel1.add(btnModify, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 260, 140, 50));
+        jLayeredPane2.add(btnModify);
+        btnModify.setBounds(30, 80, 140, 50);
 
-        jLabel1.setBackground(new java.awt.Color(51, 51, 51));
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel1.setText("Seleccione un usuario ");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 350, -1, -1));
+        BtnNuevo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        BtnNuevo.setText("Nuevo");
+        BtnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnNuevoActionPerformed(evt);
+            }
+        });
+        jLayeredPane2.add(BtnNuevo);
+        BtnNuevo.setBounds(30, 20, 140, 50);
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 700));
+        btnAgregar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+        jLayeredPane2.add(btnAgregar);
+        btnAgregar.setBounds(30, 20, 140, 50);
+
+        jPanel1.add(jLayeredPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, 200, 340));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 540));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        controlador.Controlador.BtnCancelarMant();
+        controlador.Controlador.btnCancelarMant();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        controlador.Controlador.BtnSalirAMenu();
+        controlador.Controlador.btnSalirAMenu();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void BtnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnNuevoActionPerformed
-        controlador.Controlador.BtnNuevo();
+        controlador.Controlador.btnNuevo();
     }//GEN-LAST:event_BtnNuevoActionPerformed
 
     private void newFecFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newFecFinActionPerformed
@@ -234,15 +313,15 @@ public class VistaMantUser extends javax.swing.JFrame {
     }//GEN-LAST:event_newFecFinActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        controlador.Controlador.BtnEditar();
+        controlador.Controlador.btnEditar();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        controlador.Controlador.BtnEliminarUsuario();
+        controlador.Controlador.btnEliminar();
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyActionPerformed
-       controlador.Controlador.BtnModify();
+       controlador.Controlador.btnModify();
     }//GEN-LAST:event_btnModifyActionPerformed
 
     private void txtNewEdoCtaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNewEdoCtaKeyTyped
@@ -262,6 +341,30 @@ public class VistaMantUser extends javax.swing.JFrame {
     private void txtNewPassKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNewPassKeyTyped
         
     }//GEN-LAST:event_txtNewPassKeyTyped
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        controlador.Controlador.btnAgregar();
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void txtNewPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNewPassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNewPassActionPerformed
+
+    private void txtNewEdoCtaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNewEdoCtaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNewEdoCtaActionPerformed
+
+    private void verPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verPassMouseClicked
+        verPass.setVisible(false);
+        ocultarPass.setVisible(true);
+        txtNewPass.setEchoChar((char) 0);
+    }//GEN-LAST:event_verPassMouseClicked
+
+    private void ocultarPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ocultarPassMouseClicked
+        verPass.setVisible(true);
+        ocultarPass.setVisible(false);
+        txtNewPass.setEchoChar('*');
+    }//GEN-LAST:event_ocultarPassMouseClicked
 
     /**
      * @param args the command line arguments
@@ -300,26 +403,32 @@ public class VistaMantUser extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton BtnNuevo;
+    public javax.swing.JButton btnAgregar;
     public javax.swing.JButton btnBorrar;
     public javax.swing.JButton btnCancelar;
     public javax.swing.JButton btnEditar;
     public javax.swing.JButton btnModify;
     public javax.swing.JButton btnSalir;
-    public javax.swing.JComboBox<String> cbxSelecPerson;
-    private javax.swing.JLabel jLabel1;
+    public javax.swing.JComboBox<String> combo;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JLabel label0;
+    public javax.swing.JLabel label1;
     public javax.swing.JFormattedTextField newFecFin;
     public javax.swing.JFormattedTextField newFecIni;
+    public javax.swing.JLabel ocultarPass;
+    public javax.swing.JLayeredPane seccionData;
     public javax.swing.JTable tablaUser;
     public javax.swing.JTextField txtNewEdoCta;
     public javax.swing.JPasswordField txtNewPass;
     public javax.swing.JTextField txtNewUser;
+    public javax.swing.JLabel verPass;
     // End of variables declaration//GEN-END:variables
 }

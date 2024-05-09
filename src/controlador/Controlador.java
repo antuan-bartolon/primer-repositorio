@@ -1,5 +1,6 @@
 package controlador;
 
+import java.awt.Component;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
@@ -14,7 +15,7 @@ public class Controlador {
     public static VistaMenu viewMenu = new VistaMenu();
     public static VistaLogin viewLogin = new VistaLogin();
     public static VistaNuevoPassword viewPass = new VistaNuevoPassword();
-    public static VistaMantUser viewMantUser = new VistaMantUser();
+    public static VistaMantUser viewMant = new VistaMantUser();
     // INSTANCIAMOS NUESTRO MODELO
     public static DataBase db = new DataBase();
     public static Usuario usuario = new Usuario();
@@ -45,31 +46,9 @@ public class Controlador {
     }
 
     public static void MostrarMantUser() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        // Obtener la fecha actual
-        LocalDate fechaActual = LocalDate.now();
-        // Sumar 10 días a la fecha actual para obtener la fecha de fin
-        LocalDate fechaFin = fechaActual.plusDays(10);
-        // Convertir las fechas a String usando el formateador
-        String strFechaActual = fechaActual.format(formatter);
-        String strFechaFin = fechaFin.format(formatter);
-        //
-        viewMantUser.setVisible(true);
-        viewMantUser.setLocationRelativeTo(null);
-        //
-        viewMantUser.newFecIni.setText(strFechaActual);
-        viewMantUser.newFecFin.setText(strFechaFin);
-        viewMantUser.txtNewEdoCta.setText("0");
-        viewMantUser.btnModify.setEnabled(false);
-        //
-        DefaultTableModel listaUsuarios = (DefaultTableModel) viewMantUser.tablaUser.getModel();
-        listaUsuarios.setRowCount(0); // limpiamos las filas 
-
-        // MUESTRA TODAS LAS PERSONAS EN EL COMBOBOX
-        for (Persona persona : db.MostrarPersonas()) {
-            viewMantUser.cbxSelecPerson.addItem(persona.NombreCompleto);
-        }
-        //
+        inhabilitarSeccion();
+        viewMant.setVisible(true);
+        viewMant.setLocationRelativeTo(null);
         MostrarTablaUsuario();
     }
 
@@ -90,7 +69,7 @@ public class Controlador {
     }
 
     public static void OcultarMantUser() {
-        viewMantUser.dispose();
+        viewMant.dispose();
     }
 
     public static void BtnIngresarLogin() {
@@ -171,14 +150,13 @@ public class Controlador {
         String passAnterior = viewPass.txtPassAnterior.getText();
         String passNuevo = viewPass.txtPassNuevo.getText();
         String passConfirmar = viewPass.txtPassConfirmar.getText();
-
+        //
         if (passAnterior.isEmpty() || passNuevo.isEmpty() || passConfirmar.isEmpty()) {
             viewPass.txtError.setText("por favor rellene todos los campos");
         } else if (db.CambiarPassword(usuario, passAnterior, passNuevo, passConfirmar)) {
             OcultarCambiarPass();
             MostrarMenu();
-            // seteamos la nueva password a usuario, para que pueda cambiar otra vez estando en el sistema
-            usuario.setPassword(passConfirmar);
+            usuario.setPassword(passConfirmar); // seteamos la nueva password a usuario, para que pueda cambiar otra vez estando en el sistema
             JOptionPane.showMessageDialog(null, "EL CAMBIO SE HIZO CON EXITO!!!");
         } else {
             LimpiarCamposCambiarPass();
@@ -194,30 +172,93 @@ public class Controlador {
     }
 
     public static void LimpiarCamposUsuarios() {
-        viewMantUser.txtNewUser.setText("");
-        viewMantUser.txtNewPass.setText("");
-        viewMantUser.txtNewEdoCta.setText("");
-        viewMantUser.newFecIni.setText("");
-        viewMantUser.newFecFin.setText("");
+        viewMant.txtNewUser.setText("");
+        viewMant.txtNewPass.setText("");
+        viewMant.txtNewEdoCta.setText("");
+        viewMant.newFecIni.setText("");
+        viewMant.newFecFin.setText("");
     }
 
-    public static void BtnCancelarMant() {
+    // METODOS PARA LA VENTANA DE MANTENIMIENTO DE USUARIOS
+    
+    public static void MostrarTablaUsuario() {
+        DefaultTableModel listaUsuarios = (DefaultTableModel) viewMant.tablaUser.getModel();
+        // limpiamos las filas 
+        listaUsuarios.setRowCount(0);
+        for (Usuario usersTabla : db.ListarUsuarios()) {
+            Object[] fila = new Object[7];
+            fila[0] = usersTabla.getCvUser();
+            fila[1] = usersTabla.getDatosPersonales();
+            fila[2] = usersTabla.getLogUser();
+            fila[3] = usersTabla.getPassword();
+            fila[4] = usersTabla.getFecInicio();
+            fila[5] = usersTabla.getFecFinal();
+            fila[6] = usersTabla.getEdoCta();
+            listaUsuarios.addRow(fila); // aniadimos las filas a la tabla
+        }
+    }
+    
+    public static void btnCancelarMant() {
         LimpiarCamposUsuarios();
-        viewMantUser.btnModify.setEnabled(false);
-        viewMantUser.BtnNuevo.setEnabled(true);
-        viewMantUser.cbxSelecPerson.setEnabled(true);
+        inhabilitarSeccion();
+        viewMant.combo.setEnabled(false);
+        viewMant.btnModify.setEnabled(false);
+        viewMant.btnEditar.setVisible(true);
+        viewMant.btnBorrar.setEnabled(true);
+        //
+        viewMant.combo.setSelectedIndex(0); // para que vuelva a aparecer: seleccione una persona en el combo
+        //
+        viewMant.btnAgregar.setVisible(false);
+        viewMant.BtnNuevo.setVisible(true);
+        viewMant.BtnNuevo.setEnabled(true);
+        viewMant.btnEditar.setEnabled(true);
+    }
+    
+    public static void btnSalirAMenu() {
+        MostrarMenu();
+        OcultarMantUser();
+        btnCancelarMant();
     }
 
-    public static void BtnNuevo() {
-        Usuario usuarioNuevo = new Usuario();
+    public static void btnNuevo() {
+        viewMant.BtnNuevo.setVisible(false);
+        viewMant.btnAgregar.setVisible(true);
         //
-        int cvPerson = viewMantUser.cbxSelecPerson.getSelectedIndex();
-        String newUser = viewMantUser.txtNewUser.getText();
-        String newPass = viewMantUser.txtNewPass.getText();
-        String newFecIni = viewMantUser.newFecIni.getText();
-        String newFecFin = viewMantUser.newFecFin.getText();
-        String newEdoCta = viewMantUser.txtNewEdoCta.getText();
+        viewMant.btnEditar.setEnabled(false);
+        viewMant.btnBorrar.setEnabled(false);
+        habilitarSeccion();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fechaActual = LocalDate.now(); // Obtener la fecha actual
+        LocalDate fechaFin = fechaActual.plusDays(10); // Sumar 10 días a la fecha actual para obtener la fecha de fin
+        // Convertir las fechas a String usando el formateador
+        String strFechaActual = fechaActual.format(formatter);
+        String strFechaFin = fechaFin.format(formatter);
+        //
+        viewMant.newFecIni.setText(strFechaActual);
+        viewMant.newFecFin.setText(strFechaFin);
+        viewMant.txtNewEdoCta.setText("1");
+        //
+        DefaultTableModel listaUsuarios = (DefaultTableModel) viewMant.tablaUser.getModel();
+        listaUsuarios.setRowCount(0); // limpiamos las filas 
+        // MUESTRA TODAS LAS PERSONAS EN EL COMBOBOX
+        for (Persona persona : db.MostrarPersonas()) {
+            viewMant.combo.addItem(persona.NombreCompleto);
+        }
+        //
+        MostrarTablaUsuario();
+    }
 
+    public static void btnAgregar() {
+        Usuario usuarioNuevo = new Usuario();
+        viewMant.btnEditar.setEnabled(false);
+        //
+        int cvPerson = viewMant.combo.getSelectedIndex();
+        String newUser = viewMant.txtNewUser.getText();
+        String newPass = viewMant.txtNewPass.getText();
+        String newFecIni = viewMant.newFecIni.getText();
+        String newFecFin = viewMant.newFecFin.getText();
+        String newEdoCta = viewMant.txtNewEdoCta.getText();
+        //
         if (cvPerson == 0) {
             JOptionPane.showMessageDialog(null, "SELECCIONE UN USUARIO PARA PODER CONTINUAR");
         } else if (newUser.isEmpty() || newPass.isEmpty() || newFecIni.isEmpty() || newFecFin.isEmpty() || newEdoCta.isEmpty()) {
@@ -229,95 +270,103 @@ public class Controlador {
             usuarioNuevo.setPassword(newPass);
             usuarioNuevo.setEdoCta(edoCta);
             if (db.AgregarUsuario(usuarioNuevo, newFecIni, newFecFin)) {
+                viewMant.btnAgregar.setVisible(false);
                 LimpiarCamposUsuarios();
                 MostrarTablaUsuario();
+                inhabilitarSeccion();
+                //
+                viewMant.btnEditar.setVisible(true);
+                viewMant.btnEditar.setEnabled(true);
+                viewMant.BtnNuevo.setVisible(true);
+                viewMant.btnBorrar.setEnabled(true);
             }
         }
-        //System.out.println(viewMantUser.cbxSelecPerson.getSelectedIndex());
     }
 
-    public static void MostrarTablaUsuario() {
-        DefaultTableModel listaUsuarios = (DefaultTableModel) viewMantUser.tablaUser.getModel();
-
-        listaUsuarios.setRowCount(0); // limpiamos las filas 
-        for (Usuario usersTabla : db.ListarUsuarios()) {
-            Object[] fila = new Object[7];
-            fila[0] = usersTabla.getCvPerson();
-            fila[1] = usersTabla.getLogUser();
-            fila[2] = usersTabla.getPassword();
-            fila[3] = usersTabla.getFecInicio();
-            fila[4] = usersTabla.getFecFinal();
-            fila[5] = usersTabla.getEdoCta();
-            fila[6] = usersTabla.getCvUser();
-            listaUsuarios.addRow(fila); // aniadimos las filas a la tabla
+    public static void inhabilitarSeccion() {
+        for (Component inha : viewMant.seccionData.getComponents()) {
+            inha.setEnabled(false);
         }
+        viewMant.label0.setVisible(true);
+        viewMant.label1.setVisible(false);
     }
 
-    public static void BtnEditar() {
-        int fila = viewMantUser.tablaUser.getSelectedRow();
+    public static void habilitarSeccion() {
+        for (Component hab : viewMant.seccionData.getComponents()) {
+            hab.setEnabled(true);
+        }
+        viewMant.label0.setVisible(false);
+        viewMant.label1.setVisible(true);
+    }
 
+    public static void btnEditar() {
+        viewMant.btnModify.setEnabled(true);
+        int fila = viewMant.tablaUser.getSelectedRow();
         if (fila >= 0) {
-            viewMantUser.BtnNuevo.setEnabled(false);
-            viewMantUser.btnModify.setEnabled(true);
-            viewMantUser.cbxSelecPerson.setEnabled(false);
-            String logUser = viewMantUser.tablaUser.getValueAt(fila, 1).toString();
-            String passUser = viewMantUser.tablaUser.getValueAt(fila, 2).toString();
-            String fechai = viewMantUser.tablaUser.getValueAt(fila, 3).toString();
-            String fechaf = viewMantUser.tablaUser.getValueAt(fila, 4).toString();
-            String edoCta = viewMantUser.tablaUser.getValueAt(fila, 5).toString();
-            int cvUser = Integer.parseInt(viewMantUser.tablaUser.getValueAt(fila, 6).toString());
-            viewMantUser.txtNewUser.setText(logUser);
-            viewMantUser.txtNewPass.setText(passUser);
-            viewMantUser.newFecIni.setText(fechai);
-            viewMantUser.newFecFin.setText(fechaf);
-            viewMantUser.txtNewEdoCta.setText(edoCta);
+            habilitarSeccion();
+            //
+            viewMant.BtnNuevo.setEnabled(false);
+            viewMant.btnBorrar.setEnabled(false);
+            viewMant.btnEditar.setVisible(false);
+            viewMant.btnModify.setVisible(true);
+            viewMant.combo.setEnabled(false);
+            //
+            int cvUser = Integer.parseInt(viewMant.tablaUser.getValueAt(fila, 0).toString());
+            String logUser = viewMant.tablaUser.getValueAt(fila, 2).toString();
+            String passUser = viewMant.tablaUser.getValueAt(fila, 3).toString();
+            String fechai = viewMant.tablaUser.getValueAt(fila, 4).toString();
+            String fechaf = viewMant.tablaUser.getValueAt(fila, 5).toString();
+            String edoCta = viewMant.tablaUser.getValueAt(fila, 6).toString();
+            viewMant.txtNewUser.setText(logUser);
+            viewMant.txtNewPass.setText(passUser);
+            viewMant.newFecIni.setText(fechai);
+            viewMant.newFecFin.setText(fechaf);
+            viewMant.txtNewEdoCta.setText(edoCta);
             usuarioEdit.setCvUser(cvUser);
-
         } else {
             JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA PARA EDITAR");
         }
     }
 
-    public static void BtnModify() {
-        String updUser = viewMantUser.txtNewUser.getText();
-        String updPass = viewMantUser.txtNewPass.getText();
-        String updFecin = viewMantUser.newFecIni.getText();
-        String updFecfn = viewMantUser.newFecFin.getText();
-        String EdoCta = viewMantUser.txtNewEdoCta.getText();
+    public static void btnModify() {
+        String updUser = viewMant.txtNewUser.getText();
+        String updPass = viewMant.txtNewPass.getText();
+        String updFecin = viewMant.newFecIni.getText();
+        String updFecfn = viewMant.newFecFin.getText();
+        String EdoCta = viewMant.txtNewEdoCta.getText();
         int updEdCta = Integer.parseInt(EdoCta);
+        //
         usuarioEdit.setLogUser(updUser);
         usuarioEdit.setPassword(updPass);
         usuarioEdit.setEdoCta(updEdCta);
         if (db.ModificarUsuario(usuarioEdit, updFecin, updFecfn)) {
-            JOptionPane.showMessageDialog(null, "UNA PERSONA FUE MODIFICADA");
+            viewMant.btnModify.setVisible(false);
             System.out.println("1 persona modificada");
             MostrarTablaUsuario();
             LimpiarCamposUsuarios();
-            viewMantUser.btnModify.setEnabled(false);
-            viewMantUser.cbxSelecPerson.setEnabled(true);
+            inhabilitarSeccion();
+            //viewMant.btnModify.setEnabled(false);
+            viewMant.combo.setEnabled(false);
+            viewMant.btnEditar.setVisible(true);
+            viewMant.BtnNuevo.setEnabled(true);
+            viewMant.btnBorrar.setEnabled(true);
         }
     }
 
-    public static void BtnEliminarUsuario() {
-        int fila = viewMantUser.tablaUser.getSelectedRow();
+    public static void btnEliminar() {
         Usuario usuarioDelete = new Usuario();
+        int fila = viewMant.tablaUser.getSelectedRow();
         if (fila >= 0) {
             int confirmar = JOptionPane.showConfirmDialog(null, "EN REALIDAD DESEA BORRAR EL REGISTRO? ");
             if (confirmar == JOptionPane.YES_OPTION) {
-                int cvUser = Integer.parseInt(viewMantUser.tablaUser.getValueAt(fila, 6).toString());
+                int cvUser = Integer.parseInt(viewMant.tablaUser.getValueAt(fila, 0).toString());
                 usuarioDelete.setCvUser(cvUser);
                 db.BorrarUsuario(usuarioDelete);
                 MostrarTablaUsuario();
                 System.out.println("se borro un registro");
-                JOptionPane.showMessageDialog(null, "UN USUARIO FUE ELIMINADO");
             }
         } else {
             JOptionPane.showMessageDialog(null, "NO HAS SELECCIONADO UN REGISTRO PARA BORRAR");
         }
-    }
-
-    public static void BtnSalirAMenu() {
-        MostrarMenu();
-        OcultarMantUser();
     }
 }
